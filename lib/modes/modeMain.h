@@ -30,10 +30,10 @@ void before_main() {
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
     actuatorTests();
+    rasp.syncFromRasp(info);
     info.photoSensor = ballPhoto.read();
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
-    rasp.syncFromRasp(info);
     MD.setVelocity(info);
     kicker.setPower(info.kickerPower); // power:0.0~1.0
     kicker.Kick();
@@ -49,7 +49,7 @@ void after_main() {
 
 // モード登録
 const RIMode modeTest = {
-    modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
+    modeName : "mode_main", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'M', //モード実行のコマンド
     before : callback(before_main),
     body : callback(body_main),
