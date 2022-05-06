@@ -35,6 +35,9 @@ void body_main() {
     raspBallDetectSig = LED = info.isHoldBall;
     rasp.syncFromRasp(info);
     MD.setVelocity(info);
+    kicker.setPower(info.kickerPower); // power:0.0~1.0
+    kicker.Kick();
+    dribler.write(info.driblePower); // power:0.0~1.0
     pc.printf("working\r\n");
 }
 
