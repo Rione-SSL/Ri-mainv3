@@ -5,6 +5,7 @@
 #define INLINE inline __attribute__((always_inline))
 
 #define BALL_DETECT_VALUE 0.3
+#define MODE_UNMATCH -1
 
 #ifndef PI
 #define PI 3.141592653589
@@ -13,6 +14,7 @@
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+#define bitWrite(value, bit, bitvalue)                                         \
+    (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
 
 #endif
