@@ -35,8 +35,10 @@ void body_main() {
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
     MD.setVelocity(info);
-    kicker.setPower(info.kickerPower); // power:0.0~1.0
-    kicker.Kick();
+    if (info.kickerPower > 0) {
+        kicker.setPower(info.kickerPower); // power:0.0~1.0
+        kicker.Kick();
+    }
     dribler.write(info.driblePower); // power:0.0~1.0
     pc.printf("working\r\n");
 }
