@@ -5,7 +5,10 @@
 #include "pinDefs.h"
 #include "setup_common.h"
 #include "RIMode.h"
+
+// Libs
 #include "Servo.h"
+#include "LGKicker.h"
 
 // Serial
 Serial pc(USBTX, USBRX, 2000000);
@@ -16,8 +19,7 @@ AnalogIn ballPhoto(BALL_PHOTOSENS);
 DigitalOut raspBallDetectSig(RASPI_SIG);
 DigitalOut LED(LED1);
 
-// PwmOut kick(D9);
-// LGKicker kicker(KICKER_KICK);
+LGKicker kicker(KICKER_KICK);
 Servo dribler(DRIB_PWM);
 
 // for test
