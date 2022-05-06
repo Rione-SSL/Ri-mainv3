@@ -7,7 +7,7 @@
 #include "Servo.h"
 
 // Serial
-Serial pc(USBTX, USBRX, 230400);
+Serial pc(USBTX, USBRX, 2000000);
 // Drive drive(CAN_TX, CAN_RX);
 
 // signals

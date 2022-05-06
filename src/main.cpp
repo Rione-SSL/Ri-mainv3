@@ -1,5 +1,5 @@
 #include "mbed.h"
-#include "setup.h"
+#include "modeRun.h"
 
 void setup() {
     swDrible.mode(PullUp);
@@ -9,5 +9,6 @@ void setup() {
 int main(void) {
     setup();
     while (1) {
-        }
+        modeRun();
+    }
 }
