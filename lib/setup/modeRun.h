@@ -2,22 +2,26 @@
 #define _MODERUN_
 
 #include "setup.h"
-// modes
-#include "modeTest.h"
-#include "modeMain.h"
+#include "modes.h"
 
-// mode registration
-const int8_t modeIndex = 2;
-const RIMode modes[] = {modeMain, modeTest};
-
+// パソコンからシリアル受信でモードコマンドを取得する関数
 void receiveCommand() {
-
     mode = pc.getc();
     pc.printf("receive:%c\r\n", mode);
 }
 
+// modes.hの中にあるmodesリストとPCから送られてきたコマンドを比較して検証・変換する関数
+int8_t checkModeMatch(char &m) {
+    for (size_t i = 0; i < modeIndex; i++) {
+        if (modes[i].modeLetter == m) {
+            return i;
+        }
+    }
+    return MODE_UNMATCH;
+}
+
 void initModeRun() {
-    mode = 'M';
+    mode = 'M';//デフォルトはmodeMainで始めます
     pc.attach(&receiveCommand, Serial::RxIrq);
 
     wait(2);
@@ -36,22 +40,13 @@ void initModeRun() {
     pc.printf("-----------------------------------------------\r\n");
 }
 
-int8_t checkModeMatch(char &m) {
-    for (size_t i = 0; i < modeIndex; i++) {
-        if (modes[i].modeLetter == m) {
-            return i;
-        }
-    }
-    return MODE_UNMATCH;
-}
-
 void modeRun() {
     runningModeIndex = checkModeMatch(mode);
     if (runningModeIndex != MODE_UNMATCH) {
         target = modes[runningModeIndex];
         targetPrev = modes[runningModeIndexPrev];
         if (runningModeIndexPrev == runningModeIndex) {
-            target.body();
+            target.body();//モードのメインプログラムの実行
         } else {
             targetPrev.after();
             target.before();
@@ -61,8 +56,6 @@ void modeRun() {
         mode = modes[runningModeIndexPrev].modeLetter;
         runningModeIndex = runningModeIndexPrev;
     }
-
-    wait_ms(100);
     runningModeIndexPrev = runningModeIndex;
 }
 #endif
