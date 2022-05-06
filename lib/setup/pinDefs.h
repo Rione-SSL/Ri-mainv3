@@ -12,3 +12,6 @@
 
 #define TEST_DRIB D7
 #define TEST_KICK D8
+
+#define RASP_TX D1
+#define RASP_RX D0

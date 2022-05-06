@@ -9,9 +9,11 @@
 // Libs
 #include "Servo.h"
 #include "LGKicker.h"
+#include "raspSerial.h"
 
 // Serial
 Serial pc(USBTX, USBRX, 2000000);
+raspSerial raspSerial(RASP_TX, RASP_RX);
 // Drive drive(CAN_TX, CAN_RX);
 
 // signals
