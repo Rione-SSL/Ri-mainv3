@@ -4,6 +4,7 @@
 .gcc-flags.json
 .vscode
 .DS_Store
+c_cpp_properties.json
 
 # Prerequisites
 *.d
