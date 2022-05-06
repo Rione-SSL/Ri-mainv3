@@ -11,6 +11,7 @@ const int8_t modeIndex = 2;
 const RIMode modes[] = {modeMain, modeTest};
 
 void receiveCommand() {
+
     mode = pc.getc();
     pc.printf("receive:%c\r\n", mode);
 }
@@ -18,6 +19,7 @@ void receiveCommand() {
 void initModeRun() {
     mode = 'M';
     pc.attach(&receiveCommand, Serial::RxIrq);
+
     wait(2);
     pc.printf("Boot!!\r\n");
     pc.printf("\r\nHello world!! Ri-one SSL\r\n");
