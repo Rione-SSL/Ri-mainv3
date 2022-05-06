@@ -10,12 +10,13 @@
 #include "Servo.h"
 #include "LGKicker.h"
 #include "raspSerial.h"
-#include "Drive.h"
+#include "Motor.h"
+#include "RobotInfo.h"
 
 // Serial
 Serial pc(USBTX, USBRX, 2000000);
-raspSerial raspSerial(RASP_TX, RASP_RX);
-// Drive drive(CAN_TX, CAN_RX);
+raspSerial rasp(RASP_TX, RASP_RX);
+Motor MD(CAN_TX, CAN_RX, MOTOR_TEST_SW);
 
 // signals
 AnalogIn ballPhoto(BALL_PHOTOSENS);
@@ -35,5 +36,6 @@ int8_t runningModeIndex; // mode index
 int8_t runningModeIndexPrev;
 RIMode target;
 RIMode targetPrev;
+RobotInfo info;
 
 #endif

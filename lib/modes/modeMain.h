@@ -7,7 +7,19 @@ Timeout dribTimeout;
 
 void dribleOff() {
     // タイマー割り込みでドリブルをオフにする
-    dribler.write(0);
+    dribler.write(0.0);
+}
+
+void actuatorTests() {
+    // dribler test
+    if (swDrible.read() == false) {
+        dribTimeout.attach(dribleOff, 1);
+        dribler.write(1.0);
+    }
+    // kicker test
+    if (swKicker.read() == false) {
+        kicker.Kick();
+    }
 }
 
 void before_main() {
@@ -15,19 +27,15 @@ void before_main() {
     pc.printf("before main\r\n");
 }
 
+// モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
-    // モードのメインプログラムを書く関数.この関数がループで実行されます
-    // dribler test
-    if (swDrible.read() == false) {
-        dribTimeout.attach(dribleOff, 1);
-        dribler.write(1.0);
-    }
-
-    // kicker test
-    if (swKicker.read() == false) {
-        kicker.Kick();
-    }
-    raspBallDetectSig = LED = (ballPhoto.read() < BALL_DETECT_VALUE);
+    actuatorTests();
+    info.photoSensor = ballPhoto.read();
+    info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
+    raspBallDetectSig = LED = info.isHoldBall;
+    rasp.syncFromRasp(info);
+    MD.setVelocity(info);
+    pc.printf("working\r\n");
 }
 
 void after_main() {
@@ -36,6 +44,7 @@ void after_main() {
     dribler.write(0);
 }
 
+// モード登録
 const RIMode modeTest = {
     modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'M', //モード実行のコマンド

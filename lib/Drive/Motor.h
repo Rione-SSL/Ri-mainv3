@@ -2,12 +2,12 @@
 #define _MOTOR_H_
 
 #include "mbed.h"
-#include "robotInfo.h"
+#include "RobotInfo.h"
 
 class Motor {
   public:
     Motor(PinName CAN_TX, PinName CAN_RX, PinName testSW);
-    void setVelocity(robotInfo &info);
+    void setVelocity(RobotInfo &info);
 
   private:
     void sendMotorValues();

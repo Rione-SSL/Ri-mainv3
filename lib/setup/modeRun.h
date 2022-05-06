@@ -21,7 +21,7 @@ int8_t checkModeMatch(char &m) {
 }
 
 void initModeRun() {
-    mode = 'M';//デフォルトはmodeMainで始めます
+    mode = 'M'; //デフォルトはmodeMainで始めます
     pc.attach(&receiveCommand, Serial::RxIrq);
 
     wait(2);
@@ -46,7 +46,7 @@ void modeRun() {
         target = modes[runningModeIndex];
         targetPrev = modes[runningModeIndexPrev];
         if (runningModeIndexPrev == runningModeIndex) {
-            target.body();//モードのメインプログラムの実行
+            target.body(); //モードのメインプログラムの実行
         } else {
             targetPrev.after();
             target.before();
@@ -55,6 +55,14 @@ void modeRun() {
         pc.printf("Couldn't find a mode on letter:%c\r\n", mode);
         mode = modes[runningModeIndexPrev].modeLetter;
         runningModeIndex = runningModeIndexPrev;
+        pc.printf("-----------------------------------------------\r\n");
+        pc.printf("This Robots has %d modes!!\r\n", modeIndex);
+        for (size_t i = 0; i < modeIndex; i++) {
+            pc.printf(" -- %c : %s\r\n", modes[i].modeLetter,
+                      modes[i].modeName);
+        }
+        pc.printf("-----------------------------------------------\r\n");
+        wait_ms(500);
     }
     runningModeIndexPrev = runningModeIndex;
 }

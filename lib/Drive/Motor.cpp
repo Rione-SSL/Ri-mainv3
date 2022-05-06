@@ -5,7 +5,7 @@ Motor::Motor(PinName CAN_TX, PinName CAN_RX, PinName testSW)
     canMBED.frequency(100000);
 }
 
-void Motor::setVelocity(robotInfo &info) {
+void Motor::setVelocity(RobotInfo &info) {
     if (switch_1.read() == 0) {
         order.M1.vel = 20;
         order.M2.vel = 20;

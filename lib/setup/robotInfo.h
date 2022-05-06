@@ -9,6 +9,6 @@ typedef struct {
     float photoSensor;
     bool isHoldBall;
     float imuDir;
-} robotInfo;
+} RobotInfo;
 
 #endif

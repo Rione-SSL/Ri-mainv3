@@ -30,4 +30,4 @@ void raspSerial::receiveRx() {
 void raspSerial::put(int val) { device.putc(val); }
 void raspSerial::get(float &a, int num) { a = info.motor[num]; }
 void raspSerial::print(float val) { device.printf("%f\r\n", val); }
-void raspSerial::syncFromRasp(robotInfo &_info) { _info = info; }
+void raspSerial::syncFromRasp(RobotInfo &_info) { _info = info; }

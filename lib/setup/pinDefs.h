@@ -2,6 +2,7 @@
 
 #define CAN_TX PA_11
 #define CAN_RX PA_12
+#define MOTOR_TEST_SW A0
 
 #define BALL_PHOTOSENS A6
 #define RASPI_SIG D11

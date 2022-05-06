@@ -2,7 +2,7 @@
 #define _RASPSERIAL_
 
 #include "mbed.h"
-#include "robotInfo.h"
+#include "RobotInfo.h"
 
 class raspSerial {
   public:
@@ -11,15 +11,16 @@ class raspSerial {
     void put(int val);
     void get(float &a, int num);
     void print(float val);
-    void syncFromRasp(robotInfo &_info);
+    void syncFromRasp(RobotInfo &_info);
 
   private:
-    const int8_t BUFFER_SIZE = 7;
-    int8_t buffer[64];
+    static const int8_t BUFFER_SIZE = 7;
+    //ここ元々intだったのですが8bitの変数しか扱えない空間でint(32bit)はアウトなのでuint8_tにしておきます。
+    uint8_t buffer[64];
     RawSerial device;
     int8_t bufferCount;
 
-    robotInfo info;
+    RobotInfo info;
 };
 
 #endif
