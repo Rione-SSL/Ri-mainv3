@@ -1,9 +1,8 @@
 #include "raspSerial.h"
 
 raspSerial::raspSerial(PinName TX, PinName RX) : device(TX, RX) {
-    device.baud(115200); //通信速度最速
-    device.attach(callback(this, &raspSerial::receiveRx),
-                  RawSerial::RxIrq); //角度割り込み入力
+    device.baud(115200);                                   //通信速度最速
+    device.attach(callback(this, &raspSerial::receiveRx)); //角度割り込み入力
     bufferCount = 0;
 }
 

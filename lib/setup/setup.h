@@ -10,6 +10,7 @@
 #include "Servo.h"
 #include "LGKicker.h"
 #include "raspSerial.h"
+#include "Drive.h"
 
 // Serial
 Serial pc(USBTX, USBRX, 2000000);
