@@ -19,7 +19,7 @@ void after_test() {
 }
 
 const RIMode modeMain = {
-    modeName : "mode_main", //モードの名前.コンソールで出力したりLCDに出せます.
+    modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'T', //モード実行のコマンド
     before : callback(before_test),
     body : callback(body_test),
