@@ -4,6 +4,7 @@
 void setup() {
     swDrible.mode(PullUp);
     swKicker.mode(PullUp);
+    pc.baud(2000000);
     initModeRun();
 }
 

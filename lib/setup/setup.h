@@ -26,10 +26,10 @@ Servo dribler(DRIB_PWM);
 DigitalIn swDrible(TEST_DRIB);
 DigitalIn swKicker(TEST_KICK);
 
+// mode management
 char mode;               // mode letter
 int8_t runningModeIndex; // mode index
 int8_t runningModeIndexPrev;
-
 RIMode target;
 RIMode targetPrev;
 
