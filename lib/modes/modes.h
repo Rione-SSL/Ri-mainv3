@@ -6,6 +6,6 @@
 
 // mode registration
 const int8_t modeIndex = 2;
-const RIMode modes[] = {modeMain, modeTest};
+const RIMode modes[modeIndex] = {modeMain, modeTest};
 
 #endif
