@@ -2,7 +2,7 @@
 #define _MODERUN_
 
 #include "setup.h"
-#include "modes.h"
+#include "../src/modes/modes.h"
 
 // パソコンからシリアル受信でモードコマンドを取得する関数
 void receiveCommand() {
