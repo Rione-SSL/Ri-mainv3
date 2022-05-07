@@ -47,6 +47,7 @@ void after_main() {
     // モードが切り替わり、bodyが実行し終えた直後に1度だけ実行する関数
     pc.printf("after main\r\n");
     dribler.write(0);
+    MD.setVelocityZero();
 }
 
 // モード登録

@@ -8,6 +8,7 @@ class Motor {
   public:
     Motor(PinName CAN_TX, PinName CAN_RX, PinName testSW);
     void setVelocity(RobotInfo &info);
+    void setVelocityZero();
 
   private:
     void sendMotorValues();

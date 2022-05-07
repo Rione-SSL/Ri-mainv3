@@ -20,6 +20,14 @@ void Motor::setVelocity(RobotInfo &info) {
     sendMotorValues();
 }
 
+void Motor::setVelocityZero() {
+    order.M1.vel = 0;
+    order.M2.vel = 0;
+    order.M3.vel = 0;
+    order.M4.vel = 0;
+    sendMotorValues();
+}
+
 void Motor::sendMotorValues() {
     send_motvel_data[0] = order.M1.vel8_t.L;
     send_motvel_data[1] = order.M1.vel8_t.H;
