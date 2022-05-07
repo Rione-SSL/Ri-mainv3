@@ -6,11 +6,13 @@
 void before_test() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before test\r\n");
+    imu.setZero();
 }
 
 void body_test() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
-    pc.printf("body test\r\n");
+    info.imuDir = imu.getDeg();
+    pc.printf("imu:%f\r\n", info.imuDir);
 }
 
 void after_test() {

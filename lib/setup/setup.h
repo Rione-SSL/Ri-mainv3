@@ -12,11 +12,16 @@
 #include "raspSerial.h"
 #include "Motor.h"
 #include "RobotInfo.h"
+#include "LGIMU.h"
 
 // Serial
+asm(".global _printf_float"); // enables float print
 Serial pc(USBTX, USBRX, 2000000);
 raspSerial rasp(RASP_TX, RASP_RX);
+
 Motor MD(CAN_TX, CAN_RX, MOTOR_TEST_SW);
+I2C i2c(I2C_SDA, I2C_SCL);
+BNO055 imu(&i2c);
 
 // signals
 AnalogIn ballPhoto(BALL_PHOTOSENS);
