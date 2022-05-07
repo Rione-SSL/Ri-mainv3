@@ -14,8 +14,8 @@ void Motor::setVelocity(RobotInfo &info) {
     } else {
         order.M1.vel = info.motor[0];
         order.M2.vel = info.motor[1];
-        order.M3.vel = info.motor[3];
-        order.M4.vel = info.motor[4];
+        order.M3.vel = info.motor[2];
+        order.M4.vel = info.motor[3];
     }
     sendMotorValues();
 }

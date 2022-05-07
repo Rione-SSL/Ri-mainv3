@@ -2,7 +2,7 @@
 #define _ROBOT_INFO_
 
 typedef struct {
-    float motor[4];
+    int16_t motor[4];
     float driblePower;
     float kickerPower;
     float batteryVoltage;
