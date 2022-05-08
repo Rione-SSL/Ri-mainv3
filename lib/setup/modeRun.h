@@ -24,7 +24,7 @@ void initModeRun() {
     mode = 'M'; //デフォルトはmodeMainで始めます
     pc.attach(&receiveCommand, Serial::RxIrq);
 
-    wait_ms(500);
+    wait_ms(2000);
     pc.printf("Boot!!\r\n");
     pc.printf("\r\nHello world!! Ri-one SSL\r\n");
     pc.printf("STM32 works with %ld MHz clock\r\n",

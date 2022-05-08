@@ -28,7 +28,7 @@ AnalogIn ballPhoto(BALL_PHOTOSENS);
 DigitalOut raspBallDetectSig(RASPI_SIG);
 DigitalOut LED(LED1);
 
-LGKicker kicker(KICKER_KICK);
+LGKicker kicker[2] = {KICKER_STRAIGHT, KICKER_CHIP};
 Servo dribler(DRIB_PWM);
 
 // for test

@@ -18,7 +18,7 @@ void actuatorTests() {
     }
     // kicker test
     if (swKicker.read() == false) {
-        kicker.Kick();
+        kicker[STRAIGHT_KICKER].Kick();
     }
 }
 
@@ -36,8 +36,10 @@ void body_main() {
     raspBallDetectSig = LED = info.isHoldBall;
     MD.setVelocity(info);
     if (info.kickerPower > 0) {
-        kicker.setPower(info.kickerPower); // power:0.0~1.0
-        kicker.Kick();
+        kicker[STRAIGHT_KICKER].setPower(info.kickerPower); // power:0.0~1.0
+        kicker[STRAIGHT_KICKER].Kick();
+        // kicker[CHIP_KICKER].setPower(info.kickerPower); // power:0.0~1.0
+        // kicker[CHIP_KICKER].Kick();
     }
     dribler.write(info.driblePower); // power:0.0~1.0
     pc.printf("working\r\n");

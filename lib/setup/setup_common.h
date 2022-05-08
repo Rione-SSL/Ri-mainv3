@@ -11,11 +11,13 @@
 #define PI 3.141592653589
 #endif
 
+#define STRAIGHT_KICKER 0
+#define CHIP_KICKER 1
+
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define bitWrite(value, bit, bitvalue)                                         \
     (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
-
 
 #endif
