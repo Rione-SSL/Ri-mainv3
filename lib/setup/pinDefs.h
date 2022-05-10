@@ -7,6 +7,7 @@
 #define BALL_PHOTOSENS A6
 #define RASPI_SIG D11
 #define LED1 D3
+#define VOLT_IN PA_0
 
 #define KICKER_STRAIGHT PA_8
 #define KICKER_CHIP PB_4

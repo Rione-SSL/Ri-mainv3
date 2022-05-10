@@ -6,13 +6,12 @@
 void before_test() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before test\r\n");
-    imu.setZero();
 }
 
 void body_test() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
-    info.imuDir = imu.getDeg();
-    pc.printf("imu:%f\r\n", info.imuDir);
+    info.volt = 3.3 * voltIn.read();
+    pc.printf("volt:%f\r\n", info.volt);
 }
 
 void after_test() {
@@ -20,7 +19,7 @@ void after_test() {
     pc.printf("after test\r\n");
 }
 
-const RIMode modeMain = {
+const RIMode modeTest = {
     modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'T', //モード実行のコマンド
     before : callback(before_test),

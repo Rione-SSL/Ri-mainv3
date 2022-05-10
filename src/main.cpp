@@ -6,10 +6,8 @@ void setup() {
     swKicker.mode(PullUp);
     pc.baud(2000000);
     imu.init();
-    for (size_t i = 0; i < 30; i++) {
-        imu.setZero();
-    }
     initModeRun();
+    imu.setZero();
 }
 
 int main(void) {

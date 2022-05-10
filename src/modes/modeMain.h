@@ -53,7 +53,7 @@ void after_main() {
 }
 
 // モード登録
-const RIMode modeTest = {
+const RIMode modeMain = {
     modeName : "mode_main", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'M', //モード実行のコマンド
     before : callback(before_main),
