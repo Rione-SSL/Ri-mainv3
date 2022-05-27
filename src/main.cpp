@@ -6,6 +6,7 @@ void setup() {
     swKicker.mode(PullUp);
     pc.baud(2000000);
     imu.init();
+    MD.setVelocityZero();
     initModeRun();
     imu.setZero();
 }

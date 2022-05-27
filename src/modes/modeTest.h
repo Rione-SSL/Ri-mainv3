@@ -10,7 +10,7 @@ void before_test() {
 
 void body_test() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
-    info.volt = 14.2 * voltIn.read();
+    info.volt = voltIn.read();
     pc.printf("volt:%f\r\n", info.volt);
 }
 

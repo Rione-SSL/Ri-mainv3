@@ -35,6 +35,7 @@ Servo dribler(DRIB_PWM);
 DigitalIn swDrible(TEST_DRIB);
 DigitalIn swKicker(TEST_KICK);
 
+DigitalIn _voltIn(VOLT_IN, PullDown);
 AnalogIn voltIn(VOLT_IN);
 
 // mode management
