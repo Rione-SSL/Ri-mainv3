@@ -7,6 +7,7 @@
 class raspSerial {
   public:
     raspSerial(PinName TX, PinName RX);
+    raspSerial(PinName TX, PinName RX, int baud);
     void receiveRx();
     void put(int val);
     void get(float &a, int num);

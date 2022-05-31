@@ -6,6 +6,12 @@ raspSerial::raspSerial(PinName TX, PinName RX) : device(TX, RX) {
     bufferCount = 0;
 }
 
+raspSerial::raspSerial(PinName TX, PinName RX,int baud) : device(TX, RX) {
+    device.baud(baud);                                   //通信速度最速
+    device.attach(callback(this, &raspSerial::receiveRx)); //角度割り込み入力
+    bufferCount = 0;
+}
+
 //受信割り込み関数
 void raspSerial::receiveRx() {
     bufferCount++;
@@ -17,10 +23,10 @@ void raspSerial::receiveRx() {
             bufferCount = 0;
             //受信バッファに溜まったデータを実用の変数に代入していく
             // for使うより直接代入の方が早い
-            info.motor[0] = (int16_t)buffer[1] - 100.0;
-            info.motor[1] = (int16_t)buffer[2] - 100.0;
-            info.motor[2] = (int16_t)buffer[3] - 100.0;
-            info.motor[3] = (int16_t)buffer[4] - 100.0;
+            info.motor[0] = buffer[1] - 100.0;//
+            info.motor[1] = buffer[2] - 100.0;
+            info.motor[2] = buffer[3] - 100.0;
+            info.motor[3] = buffer[4] - 100.0;
             info.driblePower = (float)buffer[5] / 100;
             info.kickerPower = (float)buffer[6] / 100;
         }
