@@ -3,6 +3,7 @@
 
 #include "setup.h"
 
+
 void before_test() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before test\r\n");
@@ -10,8 +11,7 @@ void before_test() {
 
 void body_test() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
-    uint16_t v_d = voltIn.read_u16();
-    info.volt = 4.9E-09 * v_d * v_d + 0.0028 * v_d - 33;
+    info.volt = readBatteryVoltage();
     pc.printf("volt:%d\r\n", info.volt);
 }
 
