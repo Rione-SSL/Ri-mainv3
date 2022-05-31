@@ -26,18 +26,10 @@ void before_main() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before main\r\n");
 }
-
-void getSensors() {
-    rasp.syncFromRasp(info);
-    info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
-    info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
-
-    raspBallDetectSig = LED = info.isHoldBall;
-}
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
     actuatorTests();
-    getSensors();
+    getSensors(info);
     MD.setVelocity(info);
     if (info.kickerPower > 0) {
         kicker[STRAIGHT_KICKER].setPower(info.kickerPower); // power:0.0~1.0

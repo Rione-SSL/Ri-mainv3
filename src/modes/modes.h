@@ -5,9 +5,11 @@
 #include "modeMain.h"
 #include "modeTestIMU.h"
 #include "modeDrib.h"
+#include "modeKick.h"
 
 // mode registration
-const int8_t modeIndex = 4;
-const RIMode modes[modeIndex] = {modeMain, modeTest, modeTestIMU, modeDrib};
+const int8_t modeIndex = 5;
+const RIMode modes[modeIndex] = {modeMain, modeTest, modeTestIMU, modeDrib,
+                                 modeKick};
 
 #endif

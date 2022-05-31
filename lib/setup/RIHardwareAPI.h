@@ -13,6 +13,7 @@
 #include "pinDefs.h"
 #include "setup_common.h"
 #include "mbed.h"
+#include "RIMode.h"
 
 // Serial
 asm(".global _printf_float"); // enables float print
@@ -42,6 +43,13 @@ AnalogIn voltIn(VOLT_IN);
 uint8_t readBatteryVoltage() {
     uint16_t v_d = voltIn.read_u16();
     return (4.9E-09 * v_d * v_d + 0.0028 * v_d - 33);
+}
+
+void getSensors(RobotInfo &info) {
+    rasp.syncFromRasp(info);
+    info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
+    info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
+    raspBallDetectSig = LED = info.isHoldBall;
 }
 
 #endif
