@@ -28,17 +28,32 @@ void before_main() {
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
-    actuatorTests();
+    // actuatorTests();
     getSensors(info);
-    MD.setVelocity(info);
-    if (info.kickerPower > 0) {
-        kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]); // power:0.0~1.0
-        kicker[STRAIGHT_KICKER].Kick();
-        // kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]); // power:0.0~1.0
-        // kicker[CHIP_KICKER].Kick();
+    if (!info.emergency) {
+        MD.setVelocity(info);
+        if (info.kickerPower > 0) {
+            kicker[STRAIGHT_KICKER].setPower(
+                info.kickerPower[STRAIGHT_KICKER]); // power:0.0~1.0
+            kicker[STRAIGHT_KICKER].Kick();
+            // kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]); //
+            // power:0.0~1.0 kicker[CHIP_KICKER].Kick();
+        }
+        dribler.write(info.driblePower); // power:0.0~1.0
+        rasp.sendToRasp(info);
+        pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
+                  "%.2f\tvolt:%d\tPhoto:%d\timu:%f\temg:%d\r\n",
+                  info.motor[0], info.motor[1], info.motor[2], info.motor[3],
+                  info.driblePower, info.kickerPower[STRAIGHT_KICKER],
+                  info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
+                  info.imuDir, info.emergency);
+    } else {
+        pc.printf("emergency!!!\r\n");
+        MD.setVelocityZero();
+        kicker[STRAIGHT_KICKER].setPower(0.0);
+        kicker[CHIP_KICKER].setPower(0.0);
+        dribler.write(0);
     }
-    dribler.write(info.driblePower); // power:0.0~1.0
-    pc.printf("working\r\n");
 }
 
 void after_main() {

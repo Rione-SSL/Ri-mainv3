@@ -13,6 +13,7 @@ class raspSerial {
     void get(float &a, int num);
     void print(float val);
     void syncFromRasp(RobotInfo &_info);
+    void sendToRasp(RobotInfo info);
 
   private:
     static const int8_t BUFFER_SIZE = 8;
