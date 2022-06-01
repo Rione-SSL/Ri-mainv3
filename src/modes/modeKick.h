@@ -10,8 +10,10 @@ void body_kick() {
     getSensors(info);
     pc.printf("sens:%d\r\n", info.photoSensor);
     if (info.isHoldBall) {
-        kicker[CHIP_KICKER].setPower(p); // power:0.0~1.0
-        kicker[CHIP_KICKER].Kick();
+        kicker[STRAIGHT_KICKER].setPower(p); // power:0.0~1.0
+        kicker[STRAIGHT_KICKER].Kick();
+        // kicker[CHIP_KICKER].setPower(p); // power:0.0~1.0
+        // kicker[CHIP_KICKER].Kick();
     }
 }
 

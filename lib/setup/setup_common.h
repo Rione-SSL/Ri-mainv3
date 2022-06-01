@@ -4,7 +4,7 @@
 
 #define INLINE inline __attribute__((always_inline))
 
-#define BALL_DETECT_VALUE 900
+#define BALL_DETECT_VALUE 800
 #define MODE_UNMATCH -1
 
 #ifndef PI
