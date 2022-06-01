@@ -32,9 +32,9 @@ void body_main() {
     getSensors(info);
     MD.setVelocity(info);
     if (info.kickerPower > 0) {
-        kicker[STRAIGHT_KICKER].setPower(info.kickerPower); // power:0.0~1.0
+        kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]); // power:0.0~1.0
         kicker[STRAIGHT_KICKER].Kick();
-        // kicker[CHIP_KICKER].setPower(info.kickerPower); // power:0.0~1.0
+        // kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]); // power:0.0~1.0
         // kicker[CHIP_KICKER].Kick();
     }
     dribler.write(info.driblePower); // power:0.0~1.0
