@@ -13,9 +13,10 @@ class raspSerial {
     void get(float &a, int num);
     void print(float val);
     void syncFromRasp(RobotInfo &_info);
+    void sendToRasp(RobotInfo info);
 
   private:
-    static const int8_t BUFFER_SIZE = 7;
+    static const int8_t BUFFER_SIZE = 8;
     //ここ元々intだったのですが8bitの変数しか扱えない空間でint(32bit)はアウトなのでuint8_tにしておきます。
     uint8_t buffer[64];
     RawSerial device;
