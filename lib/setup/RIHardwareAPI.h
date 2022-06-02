@@ -39,6 +39,7 @@ DigitalIn swKicker(TEST_KICK);
 DigitalIn _voltIn(VOLT_IN, PullDown);
 AnalogIn voltIn(VOLT_IN);
 
+Timeout dribTimeout;
 // Write Hardware API Fuctions under hear
 uint8_t readBatteryVoltage() {
     uint16_t v_d = voltIn.read_u16();
@@ -50,6 +51,23 @@ void getSensors(RobotInfo &info) {
     info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
+    info.imuDir = imu.getDeg();
 }
 
+void dribleOff() {
+    // タイマー割り込みでドリブルをオフにする
+    dribler.write(0.0);
+}
+
+void actuatorTests() {
+    // dribler test
+    if (swDrible.read() == false) {
+        dribTimeout.attach(dribleOff, 1);
+        dribler.write(1.0);
+    }
+    // kicker test
+    if (swKicker.read() == false) {
+        kicker[STRAIGHT_KICKER].Kick();
+    }
+}
 #endif

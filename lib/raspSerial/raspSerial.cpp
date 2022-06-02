@@ -36,33 +36,37 @@ void raspSerial::receiveRx() {
 }
 
 // void raspSerial::sendToRasp(RobotInfo info) {
-//     uint8_t buffer[8];
-//     buffer[0] = 0xFF;
-//     buffer[1] = info.volt;
-//     buffer[2] = info.volt;
-//     buffer[3] = info.photoSensor >> 8;     // MSB
-//     buffer[4] = info.photoSensor & 0x00FF; // LSB
-//     buffer[5] = info.isHoldBall;
-//     buffer[6] = (int16_t)(info.imuDir) >> 8;     // MSB
-//     buffer[7] = (int16_t)(info.imuDir) & 0x00FF; // LSB
+//     uint8_t buffer[6];
+//     char startBytes[4] {0xFF,0,0xFF,0};
+//     buffer[0] = info.volt;
+//     buffer[1] = info.photoSensor >> 8;     // MSB
+//     buffer[2] = info.photoSensor & 0x00FF; // LSB
+//     buffer[3] = info.isHoldBall;
+//     buffer[4] = (int16_t)(info.imuDir) >> 8;     // MSB
+//     buffer[5] = (int16_t)(info.imuDir) & 0x00FF; // LSB
 //     //送信バッファに溜まったデータを送信
-//     for (int i = 0; i < 8; i++) {
-//         device.putc(buffer[i]);
-//     }
+    // for (int i = 0; i < 4; i++) {
+    //     device.putc(startBytes[i]);
+    // }
+    // for (int i = 0; i < 6; i++) {
+    //     device.putc(buffer[i]);
+    // }
 // }
 
 void raspSerial::sendToRasp(RobotInfo info) {
-    uint8_t buffer[8];
-    buffer[0] = 0xFF;
-    buffer[1] = 10;
-    buffer[2] = 20;
-    buffer[3] = 30;
-    buffer[4] = 40;
-    buffer[5] = 50;
-    buffer[6] = 60;
-    buffer[7] = 70;
+    uint8_t buffer[6];
+    uint8_t startBytes[4] {0xFF,0,0xFF,0};
+    buffer[0] = 10;
+    buffer[1] = 20;
+    buffer[2] = 30;
+    buffer[3] = 40;
+    buffer[4] = 50;
+    buffer[5] = 60;
     //送信バッファに溜まったデータを送信
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 4; i++) {
+        device.putc(startBytes[i]);
+    }
+    for (int i = 0; i < 6; i++) {
         device.putc(buffer[i]);
     }
 }
