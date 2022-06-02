@@ -35,33 +35,15 @@ void raspSerial::receiveRx() {
     }
 }
 
-// void raspSerial::sendToRasp(RobotInfo info) {
-//     uint8_t buffer[6];
-//     char startBytes[4] {0xFF,0,0xFF,0};
-//     buffer[0] = info.volt;
-//     buffer[1] = info.photoSensor >> 8;     // MSB
-//     buffer[2] = info.photoSensor & 0x00FF; // LSB
-//     buffer[3] = info.isHoldBall;
-//     buffer[4] = (int16_t)(info.imuDir) >> 8;     // MSB
-//     buffer[5] = (int16_t)(info.imuDir) & 0x00FF; // LSB
-//     //送信バッファに溜まったデータを送信
-    // for (int i = 0; i < 4; i++) {
-    //     device.putc(startBytes[i]);
-    // }
-    // for (int i = 0; i < 6; i++) {
-    //     device.putc(buffer[i]);
-    // }
-// }
-
 void raspSerial::sendToRasp(RobotInfo info) {
     uint8_t buffer[6];
-    uint8_t startBytes[4] {0xFF,0,0xFF,0};
-    buffer[0] = 10;
-    buffer[1] = 20;
-    buffer[2] = 30;
-    buffer[3] = 40;
-    buffer[4] = 50;
-    buffer[5] = 60;
+    char startBytes[4] {0xFF,0,0xFF,0};
+    buffer[0] = info.volt;
+    buffer[1] = info.photoSensor >> 8;     // MSB
+    buffer[2] = info.photoSensor & 0x00FF; // LSB
+    buffer[3] = info.isHoldBall;
+    buffer[4] = (int16_t)(info.imuDir) >> 8;     // MSB
+    buffer[5] = (int16_t)(info.imuDir) & 0x00FF; // LSB
     //送信バッファに溜まったデータを送信
     for (int i = 0; i < 4; i++) {
         device.putc(startBytes[i]);
@@ -70,6 +52,24 @@ void raspSerial::sendToRasp(RobotInfo info) {
         device.putc(buffer[i]);
     }
 }
+
+// void raspSerial::sendToRasp(RobotInfo info) {
+//     uint8_t buffer[6];
+//     uint8_t startBytes[4] {0xFF,0,0xFF,0};
+//     buffer[0] = 10;
+//     buffer[1] = 20;
+//     buffer[2] = 30;
+//     buffer[3] = 40;
+//     buffer[4] = 50;
+//     buffer[5] = 60;
+//     //送信バッファに溜まったデータを送信
+//     for (int i = 0; i < 4; i++) {
+//         device.putc(startBytes[i]);
+//     }
+//     for (int i = 0; i < 6; i++) {
+//         device.putc(buffer[i]);
+//     }
+// }
 
 void raspSerial::put(int val) { device.putc(val); }
 void raspSerial::get(float &a, int num) { a = info.motor[num]; }

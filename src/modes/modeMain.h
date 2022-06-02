@@ -24,7 +24,7 @@ void body_main() {
         // }
         dribler.write(info.driblePower); // power:0.0~1.0
     } else {
-        // pc.printf("emergency!!!\r\n");
+        pc.printf("emergency!!!\t");
         MD.setVelocityZero();
         kicker[STRAIGHT_KICKER].setPower(0.0);
         kicker[CHIP_KICKER].setPower(0.0);
@@ -32,11 +32,11 @@ void body_main() {
     }
     rasp.sendToRasp(info);
     pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
-              "%.2f\tvolt:%d\tPhoto:%d\timu:%f\temg:%d\r\n",
+              "%.2f\tvolt:%d\tPhoto:%d\timu:%.02f\temg:%d\tinterval:%dus\r\n",
               info.motor[0], info.motor[1], info.motor[2], info.motor[3],
               info.driblePower, info.kickerPower[STRAIGHT_KICKER],
               info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
-              info.imuDir, info.emergency);
+              info.imuDir, info.emergency,timer.read_us());
 }
 
 void after_main() {
