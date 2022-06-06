@@ -5,20 +5,25 @@ Motor::Motor(PinName CAN_TX, PinName CAN_RX, PinName testSW)
     canMBED.frequency(100000);
 }
 
+void Motor::setMotors(RobotInfo &info,int16_t m0,int16_t m1,int16_t m2,int16_t m3){
+    info.motor[0] = m0;
+    info.motor[1] = m1;
+    info.motor[2] = m2;
+    info.motor[3] = m3;
+}
+
 void Motor::setVelocity(RobotInfo &info) {
-    if (switch_1.read() == 0) {
-#ifndef MOTOR_TEST_IGNORE
-        order.M1.vel = 20;
-        order.M2.vel = 20;
-        order.M3.vel = 20;
-        order.M4.vel = 20;
-#endif
-    } else {
-        order.M1.vel = info.motor[0];
-        order.M2.vel = info.motor[1];
-        order.M3.vel = info.motor[2];
-        order.M4.vel = info.motor[3];
-    }
+    #ifndef MOTOR_TEST_IGNORE
+            order.M1.vel = 20;
+            order.M2.vel = 20;
+            order.M3.vel = 20;
+            order.M4.vel = 20;
+    #else
+    order.M1.vel = info.motor[0];
+    order.M2.vel = info.motor[1];
+    order.M3.vel = info.motor[2];
+    order.M4.vel = info.motor[3];
+    #endif
     sendMotorValues();
 }
 

@@ -11,6 +11,10 @@ void before_test_imu() {
 void body_test_imu() {
     info.imuDir = imu.getDeg();
     pc.printf("imu:%f\r\n", info.imuDir);
+
+    int16_t m_power = info.imuDir*-0.8;
+    MD.setMotors(info,m_power,m_power,m_power,m_power);
+    MD.setVelocity(info);
 }
 
 void after_test_imu() { pc.printf("after test imu\r\n"); }

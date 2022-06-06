@@ -70,4 +70,5 @@ void actuatorTests() {
         kicker[STRAIGHT_KICKER].Kick();
     }
 }
+
 #endif
