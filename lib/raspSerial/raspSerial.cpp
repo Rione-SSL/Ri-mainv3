@@ -29,9 +29,9 @@ void raspSerial::receiveRx() {
             info.motor[3] = (int16_t)buffer[4] - 100.0;
             info.driblePower = (float)buffer[5] / 100;
             info.kickerPower[STRAIGHT_KICKER] = (float)buffer[6] / 100;
-            info.kickerPower[CHIP_KICKER] = (float)buffer[6] / 100;
-            info.emergency = buffer[7];
-        }
+            info.kickerPower[CHIP_KICKER] = (float)buffer[7] / 100;
+            info.emergency = buffer[8];
+        }        
     }
 }
 

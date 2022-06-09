@@ -13,7 +13,7 @@ void body_main() {
     actuatorTests();
     getSensors(info);
     if (!info.emergency) {
-        MD.setMotors(info,0,0,0,0);//motorのpower
+        // MD.setMotors(info,0,0,0,0);//motorのpower
         MD.setVelocity(info);
         if (info.kickerPower[STRAIGHT_KICKER] > 0) {
             kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
