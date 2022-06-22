@@ -9,6 +9,7 @@ void setup() {
     MD.setVelocityZero();
     initModeRun();
     imu.setZero();
+    timer.start();
 }
 
 int main(void) {

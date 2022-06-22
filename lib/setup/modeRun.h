@@ -44,6 +44,7 @@ void initModeRun() {
 }
 
 void modeRun() {
+    timer.reset();
     runningModeIndex = checkModeMatch(mode);
     if (runningModeIndex != MODE_UNMATCH) {
         target = modes[runningModeIndex];

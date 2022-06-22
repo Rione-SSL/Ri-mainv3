@@ -14,5 +14,5 @@ int8_t runningModeIndexPrev;
 RIMode target;
 RIMode targetPrev;
 RobotInfo info;
-
+Timer timer;
 #endif

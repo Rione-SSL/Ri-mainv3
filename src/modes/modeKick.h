@@ -5,16 +5,20 @@
 
 void before_kick() { pc.printf("before Kicker Test\r\n"); }
 
+// KICKER_STRAIGHTでストレートキック
+// CHIP_KICKERでチップキック
 void body_kick() {
     float p = 1.0;
     getSensors(info);
-    pc.printf("sens:%d\r\n", info.photoSensor);
+    pc.printf("sens:%d", info.photoSensor);
     if (info.isHoldBall) {
-        kicker[STRAIGHT_KICKER].setPower(p); // power:0.0~1.0
-        kicker[STRAIGHT_KICKER].Kick();
+        pc.printf(" KICK!!!");
         // kicker[CHIP_KICKER].setPower(p); // power:0.0~1.0
         // kicker[CHIP_KICKER].Kick();
+        kicker[KICKER_STRAIGHT].setPower(p); // power:0.0~1.0
+        kicker[KICKER_STRAIGHT].Kick();
     }
+    pc.printf("\n");
 }
 
 void after_kick() {
@@ -24,8 +28,7 @@ void after_kick() {
 }
 
 const RIMode modeKick = {
-    modeName :
-        "mode_kick_test", //モードの名前.コンソールで出力したりLCDに出せます.
+    modeName : "mode_kick_test", //モードの名前.コンソールで出力したりLCDに出せます.
     modeLetter : 'K', //モード実行のコマンド
     before : callback(before_kick),
     body : callback(body_kick),
