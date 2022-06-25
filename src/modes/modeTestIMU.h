@@ -10,9 +10,11 @@ void before_test_imu() {
 
 void body_test_imu() {
     info.imuDir = imu.getDeg();
-    pc.printf("imu:%f\r\n", info.imuDir);
+    pidDir.rawData = info.imuDir;
 
-    int16_t m_power = info.imuDir*-0.8;
+    // int16_t m_power = info.imuDir*-0.8;
+    int16_t m_power = getTurnAttitude();
+    pc.printf("imu:%f %d\r\n", info.imuDir,m_power);
     MD.setMotors(info,m_power,m_power,m_power,m_power);
     MD.setVelocity(info);
 }

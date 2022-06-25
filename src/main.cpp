@@ -10,6 +10,8 @@ void setup() {
     initModeRun();
     imu.setZero();
     timer.start();
+    pidDt.start();
+    tickCalcIMU.attach_us(&attitudeControl,6000);
 }
 
 int main(void) {

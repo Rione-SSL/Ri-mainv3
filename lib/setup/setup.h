@@ -6,6 +6,7 @@
 #include "setup_common.h"
 #include "RIMode.h"
 #include "RIHardwareAPI.h"
+#include "attitude.h"
 
 // mode management
 char mode;               // mode letter
