@@ -13,8 +13,8 @@ typedef struct {
     uint16_t dt;//時間差分
     int16_t target;//目標点
     float differential;//傾き,dx/dt
-    float Kd;
-    float Kp;
+    float Kd = -0.40;
+    float Kp = 0.024;
     int16_t turnDir;
 } type_pid;
 
@@ -40,18 +40,12 @@ int16_t degBetween_signed(int16_t deg1,int16_t deg2){
 
 void attitudeControl(){
     if(imuDirEnable) {
-        pidDir.Kp = -0.41;
-        pidDir.Kd = 0.022;
-
-        pidDir.differential = (pidDir.lastData - degBetween_signed(pidDir.rawData,pidDir.target)) / 0.006;
-        if(pidDir.differential == 0.0)
-            return;
+        pidDir.differential = (pidDir.lastData - pidDir.rawData) / 0.006;
+        if(pidDir.differential == 0.0) return;
         
-        pidDir.out = (pidDir.Kd * pidDir.differential) + (pidDir.Kp * degBetween_signed(pidDir.rawData,pidDir.target));
-        pidDir.turnDir = pidDir.out;
-        pidDir.lastData = degBetween_signed(pidDir.rawData,pidDir.target);
+        pidDir.turnDir = (pidDir.Kd * pidDir.differential) + (pidDir.Kp * degBetween_signed(pidDir.rawData,pidDir.target));
+        pidDir.lastData = pidDir.rawData;
 
-        //pidDir.turnDir = 0;
         // if(abs(pidDir.rawData) < 40) {
         //     pidDir.Kd = -0.002;
         //     pidDir.out = -0.8*degBetween_signed(pidDir.rawData,pidDir.target);
