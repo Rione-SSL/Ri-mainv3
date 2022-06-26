@@ -4,23 +4,28 @@
 
 
 typedef struct {
-    int16_t rawData;//コンパスのデータ
+    float rawData;//コンパスのデータ
     float lastData;//前回
-    float currentData;//今回
-    float laterData;//未来
+    float currentData;
     float out;
-    float dx;//差分
-    uint16_t dt;//時間差分
     int16_t target;//目標点
-    float differential;//傾き,dx/dt
-    float Kd = -0.40;
-    float Kp = 0.024;
-    int16_t turnDir;
+    float differential;
+    
+    float totalError;
+    float Ki;
+    float Kd;
+    float Kp;
+
+    float P;
+    float I;
+    float D;
+    int16_t turn;
 } type_pid;
 
 Ticker tickCalcIMU;
 Timer pidDt;
 type_pid pidDir;
+
 
 bool imuDirEnable = true;
 
@@ -38,55 +43,38 @@ int16_t degBetween_signed(int16_t deg1,int16_t deg2){
         return a;
 }
 
+void setPIDGain(){
+    pidDir.Kp = -0.4;
+    pidDir.Kd = 0.05;
+    pidDir.Ki = -0.01;
+}
+
 void attitudeControl(){
     if(imuDirEnable) {
-        pidDir.differential = (pidDir.lastData - pidDir.rawData) / 0.006;
-        if(pidDir.differential == 0.0) return;
-        
-        pidDir.turnDir = (pidDir.Kd * pidDir.differential) + (pidDir.Kp * degBetween_signed(pidDir.rawData,pidDir.target));
-        pidDir.lastData = pidDir.rawData;
+        pidDir.currentData = degBetween_signed(pidDir.rawData,pidDir.target);
+        pidDir.differential = (pidDir.lastData - pidDir.currentData) / 0.006;
+        pidDir.lastData = pidDir.currentData;
 
-        // if(abs(pidDir.rawData) < 40) {
-        //     pidDir.Kd = -0.002;
-        //     pidDir.out = -0.8*degBetween_signed(pidDir.rawData,pidDir.target);
-        // }
-        // else{
-        //     pidDir.Kd = -0.003;
-        //     pidDir.out = -1.0*degBetween_signed(pidDir.rawData,pidDir.target);;
-        // }
-        // pidDir.currentData = pidDir.rawData;
-        // pidDir.dx = pidDir.lastData - pidDir.currentData;
-        // pidDir.dt = pidDt.read_us();
-        // pidDt.reset();
-        // // pidDir.differential = pidDir.dx/pidDir.dt;
-        // pidDir.laterData = pidDir.target - pidDir.currentData + (pidDir.dx * pidDir.dt);
+        pidDir.P = pidDir.Kp * pidDir.currentData;
+        pidDir.I = pidDir.Ki * pidDir.totalError;
+        pidDir.D = pidDir.Kd * pidDir.differential;
 
-        // pidDir.out = pidDir.out - pidDir.laterData*pidDir.Kd;
+        if(abs(pidDir.currentData) < 30){ //目標からの誤差が大きい時に積分をすると発散してしまうので無理やり計算しないようにした
+            if(pidDir.currentData != 0){
+                if(abs(pidDir.I) < 30) pidDir.totalError += pidDir.currentData; // 無限に発散されると困るので上限をつけた
+            }else{
+                pidDir.totalError = 0; //0の時に10とか残ってたりするからリセットかけるようにした
+            }
+        }else{
+            pidDir.totalError = 0;
+        }
 
-        // if(abs(pidDir.out) >100) {
-        //     if(pidDir.out > 0 ) {
-        //         pidDir.out = 100;
-        //     }else{
-        //         pidDir.out = -100;
-        //     }
-        // }
-
-        // if(pidDir.out > 40 && -pidDir.currentData > 0) {
-        //     pidDir.out = 40;
-        // }else if(pidDir.out < -40 && -pidDir.currentData < 0){
-        //     pidDir.out = -40;
-        // }
-
-        // if(degBetween(pidDir.target,pidDir.rawData) < 2) {
-        //     pidDir.turnDir = 0;
-        // }else{
-        //     pidDir.turnDir = pidDir.out;
-        // }
-        // pidDir.lastData = pidDir.currentData;
+        pidDir.out = pidDir.P + pidDir.I + pidDir.D;
+        pidDir.turn = pidDir.out;
     }
 }
 
 int16_t getTurnAttitude(){
-    return pidDir.turnDir;
+    return pidDir.turn;
 }
 #endif

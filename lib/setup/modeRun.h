@@ -24,7 +24,6 @@ void initModeRun() {
     mode = 'M'; //デフォルトはmodeMainで始めます
     pc.attach(&receiveCommand, Serial::RxIrq);
 
-    wait_ms(2000);
     pc.printf("Boot!!\r\n");
     pc.printf("\r\nHello world!! Ri-one SSL\r\n");
     pc.printf("STM32 works with %ld MHz clock\r\n",
@@ -38,7 +37,7 @@ void initModeRun() {
     pc.printf("To run each modes, Please Type Letter like '%c'.\r\n",
               modes[0].modeLetter);
     pc.printf("-----------------------------------------------\r\n");
-    wait_ms(1000);
+    wait_ms(2000);
     target = modes[0];
     targetPrev = modes[0];
 }

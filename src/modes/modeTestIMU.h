@@ -10,16 +10,16 @@ void before_test_imu() {
 
 void body_test_imu() {
     info.imuDir = imu.getDeg();
+    pidDir.target = 0;
     pidDir.rawData = info.imuDir;
-
-    // int16_t m_power = info.imuDir*-0.8;
+    
     int16_t m_power = getTurnAttitude();
-    pc.printf("imu:%f %d\r\n", info.imuDir,m_power);
+    pc.printf("imu:%f %d %f\r\n", pidDir.currentData,m_power,pidDir.totalError);
     MD.setMotors(info,m_power,m_power,m_power,m_power);
     MD.setVelocity(info);
 }
 
-void after_test_imu() { pc.printf("after test imu\r\n"); }
+void after_test_imu() { pc.printf("after test imu\r\n"); MD.setVelocityZero();}
 
 const RIMode modeTestIMU = {
     modeName : "mode_test_imu",

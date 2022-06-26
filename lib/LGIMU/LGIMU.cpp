@@ -286,9 +286,9 @@ void BNO055::init() {
     setmode(OPERATION_MODE_IMUPLUS);
 }
 
-int16_t BNO055::getDeg() {
+float BNO055::getDeg() {
     get_angles();
-    deg = (int16_t)(euler.yaw) - front;
+    deg = (euler.yaw) - front;
     if (deg < 0) deg += 360;
     if (deg > 180) deg -= 360;
     deg = -deg;
