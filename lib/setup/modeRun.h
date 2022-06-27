@@ -26,16 +26,14 @@ void initModeRun() {
 
     pc.printf("Boot!!\r\n");
     pc.printf("\r\nHello world!! Ri-one SSL\r\n");
-    pc.printf("STM32 works with %ld MHz clock\r\n",
-              (SystemCoreClock / 1000000));
+    pc.printf("STM32 works with %ld MHz clock\r\n", (SystemCoreClock / 1000000));
     wait_ms(100);
     pc.printf("-----------------------------------------------\r\n");
     pc.printf("This Robots has %d modes!!\r\n", modeIndex);
     for (size_t i = 0; i < modeIndex; i++) {
         pc.printf(" -- %c : %s\r\n", modes[i].modeLetter, modes[i].modeName);
     }
-    pc.printf("To run each modes, Please Type Letter like '%c'.\r\n",
-              modes[0].modeLetter);
+    pc.printf("To run each modes, Please Type Letter like '%c'.\r\n", modes[0].modeLetter);
     pc.printf("-----------------------------------------------\r\n");
     wait_ms(2000);
     target = modes[0];
@@ -44,6 +42,7 @@ void initModeRun() {
 
 void modeRun() {
     timer.reset();
+    checkBattery();
     runningModeIndex = checkModeMatch(mode);
     if (runningModeIndex != MODE_UNMATCH) {
         target = modes[runningModeIndex];
@@ -61,12 +60,20 @@ void modeRun() {
         pc.printf("-----------------------------------------------\r\n");
         pc.printf("This Robots has %d modes!!\r\n", modeIndex);
         for (size_t i = 0; i < modeIndex; i++) {
-            pc.printf(" -- %c : %s\r\n", modes[i].modeLetter,
-                      modes[i].modeName);
+            pc.printf(" -- %c : %s\r\n", modes[i].modeLetter, modes[i].modeName);
         }
         pc.printf("-----------------------------------------------\r\n");
         wait_ms(500);
     }
     runningModeIndexPrev = runningModeIndex;
+}
+
+void checkBattery() {
+    if (info.volt < BATTERY_THRESHOLD) {
+        pc.printf("RISK!!!{Over discharge} V:%d\r\n", info.volt);
+        MD.setEmergency(true);
+    } else {
+        MD.setEmergency(false);
+    }
 }
 #endif

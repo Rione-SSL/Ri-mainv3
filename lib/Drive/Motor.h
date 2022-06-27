@@ -7,12 +7,13 @@
 class Motor {
   public:
     Motor(PinName CAN_TX, PinName CAN_RX, PinName testSW);
-    void setMotors(RobotInfo &info,int16_t m0,int16_t m1,int16_t m2,int16_t m3);
+    void setMotors(RobotInfo &info, int16_t m0, int16_t m1, int16_t m2, int16_t m3);
     void setVelocity(RobotInfo &info);
     void setVelocityZero();
+    void sendMotorValues();
+    void setEmergency(bool e);
 
   private:
-    void sendMotorValues();
     typedef union {
         int16_t vel; // main value
         struct {
@@ -26,12 +27,13 @@ class Motor {
         moterOrder M2;
         moterOrder M3;
         moterOrder M4;
-    } OrderMotVel;
+    } motorsVel;
 
-    OrderMotVel order;
+    motorsVel motors;
     char send_motvel_data[8];
     CAN canMBED;
     DigitalIn switch_1;
+    bool emergency;
 };
 
 #endif

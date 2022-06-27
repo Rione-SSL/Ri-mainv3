@@ -37,7 +37,7 @@ void body_main() {
               info.motor[0], info.motor[1], info.motor[2], info.motor[3],
               info.driblePower, info.kickerPower[STRAIGHT_KICKER],
               info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
-              info.imuDir, info.emergency,timer.read_us());
+              info.imuDir, info.emergency, timer.read_us());
 }
 
 void after_main() {
@@ -50,7 +50,7 @@ void after_main() {
 // モード登録
 const RIMode modeMain = {
     modeName : "mode_main", //モードの名前.コンソールで出力したりLCDに出せます.
-    modeLetter : 'M', //モード実行のコマンド
+    modeLetter : 'M',       //モード実行のコマンド
     before : callback(before_main),
     body : callback(body_main),
     after : callback(after_main)

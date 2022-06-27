@@ -15,6 +15,11 @@
 #include "mbed.h"
 #include "RIMode.h"
 
+#define BALL_DETECT_VALUE 700
+#define STRAIGHT_KICKER 0
+#define CHIP_KICKER 1
+#define BATTERY_THRESHOLD 132 //13.2V 
+
 // Serial
 asm(".global _printf_float"); // enables float print
 Serial pc(USBTX, USBRX, 2000000);
