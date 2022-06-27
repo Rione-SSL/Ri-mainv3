@@ -8,6 +8,10 @@
 void receiveCommand() {
     mode = pc.getc();
     pc.printf("receive:%c\r\n", mode);
+    if (mode == 'U') {
+        MD.setForceUnlockEmergency();
+        pc.printf("\r\n-------------------------------------------- \r\n UNLOCK EMERAGENCY MODE RISK{Over discharge} V:%d\r\n-------------------------------------------- \r\n", info.volt);
+    }
 }
 
 // modes.hの中にあるmodesリストとPCから送られてきたコマンドを比較して検証・変換する関数
@@ -18,6 +22,14 @@ int8_t checkModeMatch(char &m) {
         }
     }
     return MODE_UNMATCH;
+}
+
+void checkBattery() {
+    info.volt = readBatteryVoltage();
+    if (info.volt < BATTERY_THRESHOLD) {
+        pc.printf("RISK!!!{Over discharge} V:%d\r\n", info.volt);
+        MD.setEmergency();
+    }
 }
 
 void initModeRun() {
@@ -68,12 +80,4 @@ void modeRun() {
     runningModeIndexPrev = runningModeIndex;
 }
 
-void checkBattery() {
-    if (info.volt < BATTERY_THRESHOLD) {
-        pc.printf("RISK!!!{Over discharge} V:%d\r\n", info.volt);
-        MD.setEmergency(true);
-    } else {
-        MD.setEmergency(false);
-    }
-}
 #endif

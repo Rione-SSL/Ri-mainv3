@@ -11,7 +11,8 @@ class Motor {
     void setVelocity(RobotInfo &info);
     void setVelocityZero();
     void sendMotorValues();
-    void setEmergency(bool e);
+    void setEmergency();
+    void setForceUnlockEmergency();
 
   private:
     typedef union {

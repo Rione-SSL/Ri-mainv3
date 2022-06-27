@@ -58,6 +58,10 @@ void Motor::sendMotorValues() {
     canMBED.write(CANMessage(0x1AA, send_motvel_data, 8));
 }
 
-void Motor::setEmergency(bool e) {
-    emergency = e;
+void Motor::setEmergency() {
+    emergency = true;
+}
+
+void Motor::setForceUnlockEmergency() {
+    emergency = false;
 }

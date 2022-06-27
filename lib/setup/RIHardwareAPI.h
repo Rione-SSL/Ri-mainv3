@@ -57,7 +57,6 @@ void getSensors(RobotInfo &info) {
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
     info.imuDir = imu.getDeg();
-    info.volt = readBatteryVoltage();
 }
 
 void dribleOff() {
