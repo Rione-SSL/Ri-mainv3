@@ -4,6 +4,8 @@
 #include "setup.h"
 #include "../src/modes/modes.h"
 
+RobotInfo info = {0};
+int16_t emergencyCounter = 0;
 // パソコンからシリアル受信でモードコマンドを取得する関数
 void receiveCommand() {
     mode = pc.getc();
@@ -24,11 +26,18 @@ int8_t checkModeMatch(char &m) {
     return MODE_UNMATCH;
 }
 
-void checkBattery() {
-    info.volt = readBatteryVoltage();
+void checkBattery(RobotInfo &info) {
     if (info.volt < BATTERY_THRESHOLD) {
-        pc.printf("RISK!!!{Over discharge} V:%d\r\n", info.volt);
+        emergencyCounter++;
+    } else {
+        emergencyCounter--;
+    }
+    if (emergencyCounter >= 300) {
         MD.setEmergency();
+        pc.printf("RISK!!!{Over discharge} V:%d ", info.volt);
+        emergencyCounter = 300;
+    } else if (emergencyCounter <= 0) {
+        emergencyCounter = 0;
     }
 }
 
@@ -54,7 +63,8 @@ void initModeRun() {
 
 void modeRun() {
     timer.reset();
-    checkBattery();
+    getSensors(info);
+    checkBattery(info);
     runningModeIndex = checkModeMatch(mode);
     if (runningModeIndex != MODE_UNMATCH) {
         target = modes[runningModeIndex];

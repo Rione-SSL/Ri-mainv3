@@ -11,7 +11,7 @@ typedef struct {
     //ドリブルの強さ(速さ),getするデータはuint8_tだが、ハードウェアAPIが　floatになっているのでfloat型
     float kickerPower[2];
     // キッカーの強さ,getするデータはuint8_tだが、ハードウェアAPIが　floatになっているのでfloat型
-    uint8_t volt;
+    volatile uint8_t volt;
     //バッテリー電圧
     uint16_t photoSensor;
     //フォトセンサの1000分率

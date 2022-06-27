@@ -18,7 +18,7 @@
 #define BALL_DETECT_VALUE 700
 #define STRAIGHT_KICKER 0
 #define CHIP_KICKER 1
-#define BATTERY_THRESHOLD 132 //13.2V 
+#define BATTERY_THRESHOLD 132 // 13.2V
 
 // Serial
 asm(".global _printf_float"); // enables float print
@@ -57,6 +57,7 @@ void getSensors(RobotInfo &info) {
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
     info.imuDir = imu.getDeg();
+    info.volt = readBatteryVoltage();
 }
 
 void dribleOff() {
