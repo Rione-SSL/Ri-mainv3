@@ -236,7 +236,7 @@ class BNO055 {
 
     void init(void);
 
-    int16_t getDeg(void);
+    float getDeg(void);
 
     void setZero(void);
     /** Structures containing 3-axis data for acceleration, rate of turn and
