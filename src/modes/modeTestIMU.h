@@ -3,14 +3,27 @@
 
 #include "setup.h"
 
+#define TEST1
+Timer tim;
 void before_test_imu() {
     pc.printf("before test imu\r\n");
     imu.setZero();
+    tim.start();
 }
 
 void body_test_imu() {
-    // info.imuDir = imu.getDeg();
-    pidDir.target = 0;
+// info.imuDir = imu.getDeg();
+#ifdef TEST1
+    if (tim.read_ms() < 1000) {
+        pidDir.target = 0;
+    } else if (tim.read_ms() < 2000) {
+        pidDir.target = -120;
+    } else if (tim.read_ms() < 3000) {
+        pidDir.target = 60;
+    } else {
+        tim.reset();
+    }
+#endif
     pidDir.rawData = info.imuDir;
 
     int16_t m_power = getTurnAttitude();

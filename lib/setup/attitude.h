@@ -26,7 +26,6 @@ Timer pidDt;
 type_pid pidDir;
 
 bool imuDirEnable = true;
-
 int16_t degBetween(int16_t deg1, int16_t deg2) {
     int16_t a = deg1 - deg2;
     while (a < 0)
@@ -45,9 +44,13 @@ int16_t degBetween_signed(int16_t deg1, int16_t deg2) {
     return a;
 }
 
+void setTargetDir(int16_t target) {
+    pidDir.target = target;
+}
+
 void setPIDGain() {
     pidDir.Kp = -0.4;
-    pidDir.Kd = 0.06;
+    pidDir.Kd = 0.08;
     pidDir.Ki = -1.6;
 }
 
@@ -72,8 +75,8 @@ void attitudeControl() {
         pidDir.D = pidDir.Kd * pidDir.differential;
 
         pidDir.out = pidDir.P + pidDir.I + pidDir.D;
-        if (abs(pidDir.out) > 40) {
-            pidDir.out = pidDir.out / abs(pidDir.out) * 40;
+        if (abs(pidDir.out) > 35) {
+            pidDir.out = pidDir.out / abs(pidDir.out) * 35;
         }
         pidDir.turn = pidDir.out;
     }
