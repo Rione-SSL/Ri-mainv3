@@ -22,8 +22,8 @@
 
 // Serial
 asm(".global _printf_float"); // enables float print
-Serial pc(USBTX, USBRX, 2000000);
-raspSerial rasp(RASP_TX, RASP_RX, 115200);
+RawSerial pc(USBTX, USBRX, 2000000);
+raspSerial rasp(RASP_TX, RASP_RX, &pc, 9600);
 
 Motor MD(CAN_TX, CAN_RX, MOTOR_TEST_SW);
 I2C i2c(I2C_SDA, I2C_SCL);
@@ -52,12 +52,14 @@ uint8_t readBatteryVoltage() {
 }
 
 void getSensors(RobotInfo &info) {
+    
     rasp.syncFromRasp(info);
     info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
     info.imuDir = imu.getDeg();
     info.volt = readBatteryVoltage();
+    
 }
 
 void dribleOff() {

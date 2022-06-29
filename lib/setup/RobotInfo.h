@@ -19,6 +19,8 @@ typedef struct {
     // ボールを持っているか
     float imuDir;
     // PID制御するためにfloat型である必要がある。
+    float imuTargetDir;
+    // PID制御するためにfloat型である必要がある。
     bool emergency;
     //危険信号。ロボットに止まって欲しい時にtrueにする
 } RobotInfo;

@@ -11,8 +11,30 @@ void before_test() {
 void body_test() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
     // info.volt = readBatteryVoltage();
+    // getSensors(info);
+    // pc.printf("volt:%d\r\n", info.imuTargetDir);
+    // pc.printf("%d\r\n",rasp.recievedData);
+    rasp.sendToRasp(info);
     getSensors(info);
-    pc.printf("volt:%d\r\n", info.volt);
+    if (!info.emergency) {
+        // MD.setMotors(info,0,0,0,0);//motorのpower
+        MD.setVelocity(info);
+        if (info.kickerPower[STRAIGHT_KICKER] > 0) {
+            kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
+            kicker[STRAIGHT_KICKER].Kick();
+        }
+        // if(info.kickerPower[CHIP_KICKER] > 0){
+        //     kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
+        //     kicker[CHIP_KICKER].Kick();
+        // }
+        dribler.write(info.driblePower); // power:0.0~1.0
+    } else {
+        // pc.printf("emergency!!!\t");
+        MD.setVelocityZero();
+        kicker[STRAIGHT_KICKER].setPower(0.0);
+        kicker[CHIP_KICKER].setPower(0.0);
+        dribler.write(0);
+    }
 }
 
 void after_test() {
@@ -22,7 +44,7 @@ void after_test() {
 
 const RIMode modeTest = {
     modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
-    modeLetter : 'T', //モード実行のコマンド
+    modeLetter : 'T',       //モード実行のコマンド
     before : callback(before_test),
     body : callback(body_test),
     after : callback(after_test)
