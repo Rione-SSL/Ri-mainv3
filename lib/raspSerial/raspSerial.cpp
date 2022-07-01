@@ -37,16 +37,14 @@ void raspSerial::receiveRx() {
             info.kickerPower[STRAIGHT_KICKER] = (float)buffer[6] / 100;
             info.kickerPower[CHIP_KICKER] = (float)buffer[7] / 100;
             info.imuTargetDir = (float)((int16_t)(buffer[8] * (buffer[9] == 1 ? -1 : 1)));
+            info.imuStatus = buffer[9];
             info.emergency = buffer[10];
-        }
-         else {
+        } else {
             pc->printf("e_b[0] == 0xFF : %d ,bC = %d\r\n", recievedData, bufferCount);
             bufferCount = 0;
         }
     }
 
-
-    
     // pc->printf("DATA%d:%d ", bufferCount, recievedData);
     //  if (buffer[0] != 0xFF) bufferCount--;
     // if (buffer[0] == 0xFF) {
@@ -97,11 +95,11 @@ void raspSerial::sendToRasp(RobotInfo info) {
     //送信バッファに溜まったデータを送信
     for (int i = 0; i < 4; i++) {
         device.putc(startBytes[i]);
-        wait_us(500);
+        // wait_us(500);
     }
     for (int i = 0; i < 6; i++) {
         device.putc(buffer[i]);
-        wait_us(500);
+        // wait_us(500);
     }
 }
 

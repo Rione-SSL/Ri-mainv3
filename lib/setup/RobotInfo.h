@@ -23,6 +23,8 @@ typedef struct {
     // PID制御するためにfloat型である必要がある。
     bool emergency;
     //危険信号。ロボットに止まって欲しい時にtrueにする
+    uint8_t imuStatus;
+    // 0:正の角度 1:負の角度 2:IMU0度設定
 } RobotInfo;
 
 #endif

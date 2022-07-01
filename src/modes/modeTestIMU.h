@@ -12,7 +12,7 @@ void before_test_imu() {
 }
 
 void body_test_imu() {
-// info.imuDir = imu.getDeg();
+    info.imuDir = imu.getDeg();
 #ifdef TEST1
     if (tim.read_ms() < 1000) {
         pidDir.target = 0;
