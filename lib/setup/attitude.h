@@ -7,7 +7,8 @@ typedef struct {
     float lastData; //前回
     float currentData;
     float out;
-    int16_t target; //目標点
+    int16_t target;     //目標点
+    int16_t targetPrev; //目標点
     float differential;
 
     float totalError;
@@ -49,9 +50,9 @@ void setTargetDir(int16_t target) {
 }
 
 void setPIDGain() {
-    pidDir.Kp = -0.4;
-    pidDir.Kd = 0.08;
-    pidDir.Ki = -1.6;
+    pidDir.Kp = -0.3;
+    pidDir.Kd = 0.05;
+    pidDir.Ki = -1.0;
 }
 
 void attitudeControl() {
@@ -60,7 +61,7 @@ void attitudeControl() {
         pidDir.differential = (pidDir.lastData - pidDir.currentData) / 0.006;
         pidDir.lastData = pidDir.currentData;
 
-        if (abs(pidDir.currentData) < 30) { //目標からの誤差が大きい時に積分をすると発散してしまうので無理やり計算しないようにした
+        if (abs(pidDir.currentData) < 30 && pidDir.target == pidDir.targetPrev) { //目標からの誤差が大きい時に積分をすると発散してしまうので無理やり計算しないようにした
             if (pidDir.currentData != 0) {
                 if (abs(pidDir.I) < 30) pidDir.totalError += pidDir.currentData * 0.006; // 無限に発散されると困るので上限をつけた
             } else {
@@ -78,6 +79,7 @@ void attitudeControl() {
         if (abs(pidDir.out) > 35) {
             pidDir.out = pidDir.out / abs(pidDir.out) * 35;
         }
+        pidDir.targetPrev = pidDir.target;
         pidDir.turn = pidDir.out;
     }
 }

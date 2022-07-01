@@ -17,7 +17,7 @@ void Motor::setMotors(RobotInfo &info, int16_t m0, int16_t m1, int16_t m2, int16
     sendMotorValues();
 }
 
-void Motor::setVelocity(RobotInfo &info,int8_t turn) {
+void Motor::setVelocity(RobotInfo &info, int8_t turn) {
 #ifndef MOTOR_TEST_IGNORE
     motors.M1.vel = 20;
     motors.M2.vel = 20;
