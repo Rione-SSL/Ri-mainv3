@@ -3,7 +3,7 @@
 
 #include "setup.h"
 
-#define TEST1
+// #define TEST1
 Timer tim;
 void before_test_imu() {
     pc.printf("before test imu\r\n");

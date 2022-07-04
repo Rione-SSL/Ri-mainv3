@@ -50,12 +50,12 @@ void setTargetDir(int16_t target) {
 }
 
 void setPIDGain() {
-    // pidDir.Kp = -0.3;
-    // pidDir.Kd = 0.05;
-    // pidDir.Ki = -1.0;
-    pidDir.Kp = -0.2;
+    pidDir.Kp = -0.3;
     pidDir.Kd = 0.05;
-    pidDir.Ki = 0;
+    pidDir.Ki = -1.0;
+    // pidDir.Kp = -0.2;
+    // pidDir.Kd = 0.05;
+    // pidDir.Ki = 0;
 }
 
 void attitudeControl() {

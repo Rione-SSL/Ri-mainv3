@@ -13,6 +13,10 @@ void receiveCommand() {
     if (mode == 'U') {
         MD.setForceUnlockEmergency();
         pc.printf("\r\n-------------------------------------------- \r\n UNLOCK EMERAGENCY MODE RISK{Over discharge} V:%d\r\n-------------------------------------------- \r\n", info.volt);
+    } else if (mode == 's') {
+        MD.setEmergency();
+        MD.setVelocityZero();
+        pc.printf("\r\n STOP!!!!!! \r\n");
     }
 }
 
@@ -34,6 +38,7 @@ void checkBattery(RobotInfo &info) {
     }
     if (emergencyCounter >= 300) {
         MD.setEmergency();
+        MD.setVelocityZero();
         pc.printf("RISK!!!{Over discharge} V:%d ", info.volt);
         emergencyCounter = 300;
     } else if (emergencyCounter <= 0) {
