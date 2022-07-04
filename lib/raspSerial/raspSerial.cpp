@@ -36,7 +36,11 @@ void raspSerial::receiveRx() {
             info.driblePower = (float)buffer[5] / 100;
             info.kickerPower[STRAIGHT_KICKER] = (float)buffer[6] / 100;
             info.kickerPower[CHIP_KICKER] = (float)buffer[7] / 100;
-            info.imuTargetDir = (float)((int16_t)(buffer[8] * (buffer[9] == 1 ? -1 : 1)));
+            if (buffer[9] == 3) {
+                info.imuTargetDir = 0;
+            } else {
+                info.imuTargetDir = (float)((int16_t)(buffer[8] * (buffer[9] == 1 ? -1 : 1)));
+            }
             info.imuStatus = buffer[9];
             info.emergency = buffer[10];
         } else {
