@@ -13,8 +13,10 @@ void body_main() {
     int16_t m_turn = 0;
     actuatorTests();
     getSensors(info);
-    if (info.imuStatus == IMU_RESET) {
-        imu.setZero();
+    if (IMU_CALIBURATION) {
+        MD.setVelocityZero();
+        wait_ms(400);
+        imu.setDeg(info.imuTargetDir);
     }
     if (!info.emergency) {
         // MD.setMotors(info,0,0,0,0);//motorのpower

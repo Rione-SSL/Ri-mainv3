@@ -18,6 +18,7 @@ typedef struct {
     bool isHoldBall;
     // ボールを持っているか
     float imuDir;
+    float imuDirPrev;
     // PID制御するためにfloat型である必要がある。
     float imuTargetDir;
     // PID制御するためにfloat型である必要がある。

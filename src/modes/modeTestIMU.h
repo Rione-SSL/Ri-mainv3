@@ -4,7 +4,9 @@
 #include "setup.h"
 
 // #define TEST1
+#define TEST2
 Timer tim;
+int16_t velAngular = 0;
 void before_test_imu() {
     pc.printf("before test imu\r\n");
     imu.setZero();
@@ -12,7 +14,9 @@ void before_test_imu() {
 }
 
 void body_test_imu() {
+    info.imuDirPrev = info.imuDir;
     info.imuDir = imu.getDeg();
+    velAngular = info.imuDir - info.imuDirPrev;
 #ifdef TEST1
     if (tim.read_ms() < 1000) {
         pidDir.target = 0;
@@ -20,6 +24,15 @@ void body_test_imu() {
         pidDir.target = -120;
     } else if (tim.read_ms() < 3000) {
         pidDir.target = 60;
+    } else {
+        tim.reset();
+    }
+#endif
+#ifdef TEST2
+    if (tim.read_ms() < 2000) {
+        imu.setDeg(0);
+    } else if (tim.read_ms() < 2000) {
+        imu.setDeg(60);
     } else {
         tim.reset();
     }

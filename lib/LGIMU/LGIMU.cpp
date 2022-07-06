@@ -289,8 +289,10 @@ void BNO055::init() {
 float BNO055::getDeg() {
     get_angles();
     deg = (euler.yaw) - front;
-    if (deg < 0) deg += 360;
-    if (deg > 180) deg -= 360;
+    while (deg < 0)
+        deg += 360;
+    while (deg > 180)
+        deg -= 360;
     deg = -deg;
     return deg;
 }
@@ -298,4 +300,10 @@ float BNO055::getDeg() {
 void BNO055::setZero() {
     get_angles();
     front = (int16_t)(euler.yaw);
+}
+
+void BNO055::setDeg(int16_t deg) {
+    int16_t degNow = getDeg();
+    int16_t diff = deg - degNow;
+    front = degNow - diff;
 }

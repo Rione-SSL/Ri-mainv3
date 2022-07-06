@@ -239,6 +239,8 @@ class BNO055 {
     float getDeg(void);
 
     void setZero(void);
+
+    void setDeg(int16_t deg);
     /** Structures containing 3-axis data for acceleration, rate of turn and
        magnetic field. x,y,z are the scale floating point values and
         rawx, rawy, rawz are the int16_t values read from the sensors **/
