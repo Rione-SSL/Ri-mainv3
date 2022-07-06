@@ -38,3 +38,5 @@ c_cpp_properties.json
 *.exe
 *.out
 *.app
+
+.DS_Store
