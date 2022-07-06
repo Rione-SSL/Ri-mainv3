@@ -11,9 +11,12 @@ void before_test() {
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_test() {
     int16_t m_turn = 0;
+    actuatorTests();
     getSensors(info);
-    if (info.imuStatus == IMU_RESET) {
-        imu.setZero();
+    if (IMU_CALIBURATION) {
+        MD.setVelocityZero();
+        wait_ms(400);
+        imu.setDeg(info.imuTargetDir);
     }
     if (!info.emergency) {
         // MD.setMotors(info,0,0,0,0);//motorのpower
@@ -38,12 +41,13 @@ void body_test() {
         dribler.write(0);
     }
     rasp.sendToRasp(info);
-    pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
-              "%.2f\tvolt:%d\tPhoto:%d\timu:%.02f\ttargetDeg:%02f\temg:%d\tinterval:%dus\r\n",
-              info.motor[0], info.motor[1], info.motor[2], info.motor[3],
-              info.driblePower, info.kickerPower[STRAIGHT_KICKER],
-              info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
-              info.imuDir, info.imuTargetDir, info.emergency, timer.read_us());
+    pc.printf("%dus\r\n", timer.read_us());
+    // pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
+    //           "%.2f\tvolt:%d\tPhoto:%d\timu:%.02f\ttargetDeg:%02f\temg:%d\tinterval:%dus\r\n",
+    //           info.motor[0], info.motor[1], info.motor[2], info.motor[3],
+    //           info.driblePower, info.kickerPower[STRAIGHT_KICKER],
+    //           info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
+    //           info.imuDir, info.imuTargetDir, info.emergency, timer.read_us());
 }
 
 void after_test() {

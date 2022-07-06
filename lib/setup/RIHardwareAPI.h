@@ -52,14 +52,14 @@ uint8_t readBatteryVoltage() {
 }
 
 void getSensors(RobotInfo &info) {
-    
+
     rasp.syncFromRasp(info);
     info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
     info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
     raspBallDetectSig = LED = info.isHoldBall;
+    info.imuDirPrev = info.imuDir;
     info.imuDir = imu.getDeg();
     info.volt = readBatteryVoltage();
-    
 }
 
 void dribleOff() {

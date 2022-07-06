@@ -5,7 +5,9 @@
 #define INLINE inline __attribute__((always_inline))
 
 #define MODE_UNMATCH -1
-#define IMU_RESET 3
+#define IMU_CALIBURATION_3 3
+#define IMU_CALIBURATION_4 4
+#define IMU_CALIBURATION info.imuStatus == IMU_CALIBURATION_3 || info.imuStatus == IMU_CALIBURATION_4
 
 #ifndef PI
 #define PI 3.141592653589
