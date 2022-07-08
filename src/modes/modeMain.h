@@ -14,8 +14,6 @@ void body_main() {
     actuatorTests();
     getSensors(info);
     if (IMU_CALIBURATION) {
-        MD.setVelocityZero();
-        wait_ms(400);
         imu.setDeg(info.imuTargetDir);
     }
     if (!info.emergency) {
@@ -23,7 +21,11 @@ void body_main() {
         pidDir.target = info.imuTargetDir;
         pidDir.rawData = info.imuDir;
         m_turn = getTurnAttitude();
-        MD.setVelocity(info, m_turn);
+        if (IMU_CALIBURATION) {
+            MD.setVelocityZero();
+        } else {
+            MD.setVelocity(info, m_turn);
+        }
         if (info.kickerPower[STRAIGHT_KICKER] > 0) {
             kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
             kicker[STRAIGHT_KICKER].Kick();

@@ -7,6 +7,7 @@ void before_test() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before test\r\n");
     imu.setZero();
+    // imu.setDeg(0);
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_test() {
@@ -14,8 +15,6 @@ void body_test() {
     actuatorTests();
     getSensors(info);
     if (IMU_CALIBURATION) {
-        MD.setVelocityZero();
-        wait_ms(400);
         imu.setDeg(info.imuTargetDir);
     }
     if (!info.emergency) {
@@ -23,7 +22,11 @@ void body_test() {
         pidDir.target = info.imuTargetDir;
         pidDir.rawData = info.imuDir;
         m_turn = getTurnAttitude();
-        MD.setVelocity(info, m_turn);
+        if (IMU_CALIBURATION) {
+            MD.setVelocityZero();
+        } else {
+            MD.setVelocity(info, m_turn);
+        }
         if (info.kickerPower[STRAIGHT_KICKER] > 0) {
             kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
             kicker[STRAIGHT_KICKER].Kick();
@@ -48,6 +51,8 @@ void body_test() {
     //           info.driblePower, info.kickerPower[STRAIGHT_KICKER],
     //           info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
     //           info.imuDir, info.imuTargetDir, info.emergency, timer.read_us());
+    pc.printf("trueDeg:%d\tDeg:%dtargetDeg:%d\tinterval:%dus\r\n", (int)imu.euler.yaw,
+              (int)info.imuDir, info.imuTargetDir, timer.read_us());
 }
 
 void after_test() {

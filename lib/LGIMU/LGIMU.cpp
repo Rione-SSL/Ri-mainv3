@@ -297,13 +297,25 @@ float BNO055::getDeg() {
     return deg;
 }
 
+int16_t BNO055::degBetween_signed(int16_t deg1, int16_t deg2) {
+    int16_t a = deg1 - deg2;
+    while (a < 0)
+        a += 360;
+    while (a > 180)
+        a -= 360;
+    return a;
+}
+
 void BNO055::setZero() {
     get_angles();
     front = (int16_t)(euler.yaw);
 }
 
 void BNO055::setDeg(int16_t deg) {
+    // int16_t degNow = getDeg();
+    // int16_t diff = degBetween_signed(deg, degNow);
+    // front = front - diff;
     int16_t degNow = getDeg();
-    int16_t diff = deg - degNow;
-    front = degNow - diff;
+    int16_t diff = degBetween_signed(deg, degNow);
+    front = (int16_t)(euler.yaw) + diff;
 }

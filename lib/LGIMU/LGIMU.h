@@ -236,6 +236,8 @@ class BNO055 {
 
     void init(void);
 
+    int16_t degBetween_signed(int16_t deg1, int16_t deg2);
+
     float getDeg(void);
 
     void setZero(void);

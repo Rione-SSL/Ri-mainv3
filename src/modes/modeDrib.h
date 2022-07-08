@@ -10,7 +10,7 @@ void before_drib() {
 
 void body_drib() {
     // モードのメインプログラムを書く関数.この関数がループで実行されます
-    float p = 0.2;
+    float p = 1.0;
     dribler.write(p);
     pc.printf("drib power:%f\r\n", p);
 }
