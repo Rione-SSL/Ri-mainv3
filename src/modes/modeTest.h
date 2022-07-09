@@ -44,16 +44,26 @@ void body_test() {
         dribler.write(0);
     }
     rasp.sendToRasp(info);
-    pc.printf("%dus\r\n", timer.read_us());
-    // pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
-    //           "%.2f\tvolt:%d\tPhoto:%d\timu:%.02f\ttargetDeg:%02f\temg:%d\tinterval:%dus\r\n",
-    //           info.motor[0], info.motor[1], info.motor[2], info.motor[3],
-    //           info.driblePower, info.kickerPower[STRAIGHT_KICKER],
-    //           info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
-    //           info.imuDir, info.imuTargetDir, info.emergency, timer.read_us());
-    pc.printf("trueDeg:%d\tDeg:%dtargetDeg:%d\tinterval:%dus\r\n", (int)imu.euler.yaw,
-              (int)info.imuDir, info.imuTargetDir, timer.read_us());
+    // pc.printf("%dus\r\n", timer.read_us());
+    pc.printf("M1:%d\tM2:%d\tM3:%d\tM4:%d\tdrib:%.2f\tstraight:%.2f\tchip:"
+              "%.2f\tvolt:%d\tPhoto:%d\timu:%.02f\ttargetDeg:%02f\temg:%d\tinterval:%dus\r\n",
+              info.motor[0], info.motor[1], info.motor[2], info.motor[3],
+              info.driblePower, info.kickerPower[STRAIGHT_KICKER],
+              info.kickerPower[CHIP_KICKER], info.volt, info.photoSensor,
+              info.imuDir, info.imuTargetDir, info.emergency, timer.read_us());
+    // pc.printf("trueIMU:%.2f\t Dir:%.2f\t target:%.2f\t status:%d\r\n", imu.euler.yaw, info.imuDir, info.imuTargetDir, info.imuStatus);
 }
+
+// int count = 0;
+// void body_test() {
+//     if (count <= 50) {
+//         pc.printf(" KICK!!! %d\r\n", count);
+//         kicker[CHIP_KICKER].setPower(1.0); // power:0.0~1.0
+//         kicker[CHIP_KICKER].Kick();
+//         wait(20);
+//         count++;
+//     }
+// }
 
 void after_test() {
     // モードが切り替わり、bodyが実行し終えた直後に1度だけ実行する関数

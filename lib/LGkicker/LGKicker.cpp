@@ -4,9 +4,9 @@
 LGKicker::LGKicker(PinName KickerPin)
     : Kicker(KickerPin), KickerIsRedey(), Kicker_timeout(), timer() {
     Kicker = 0;
-    timer.reset();
     timer.start();
-    Kicker.period_us(50000);
+    timer.reset();
+    Kicker.period_us(10000); // 50000
     setPower(1.0);
 }
 
