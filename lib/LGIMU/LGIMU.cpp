@@ -315,7 +315,11 @@ void BNO055::setDeg(int16_t deg) {
     // int16_t degNow = getDeg();
     // int16_t diff = degBetween_signed(deg, degNow);
     // front = front - diff;
-    int16_t degNow = getDeg();
-    int16_t diff = degBetween_signed(deg, degNow);
-    front = (int16_t)(euler.yaw) + diff;
+
+    // int16_t degNow = getDeg();
+    // int16_t diff = degBetween_signed(deg, degNow);
+    // front = (int16_t)(euler.yaw) + diff;
+
+    get_angles();
+    front = (int16_t)(euler.yaw) + deg;
 }
