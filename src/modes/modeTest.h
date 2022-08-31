@@ -1,6 +1,6 @@
 #ifndef _MODETEST_
 #define _MODETEST_
-
+#define MOTORTEST
 #include "setup.h"
 
 void before_test() {
@@ -10,6 +10,8 @@ void before_test() {
     // imu.setDeg(0);
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
+
+#ifndef MOTORTEST
 void body_test() {
     int16_t m_turn = 0;
     actuatorTests();
@@ -54,16 +56,60 @@ void body_test() {
     // pc.printf("trueIMU:%.2f\t Dir:%.2f\t target:%.2f\t status:%d\r\n", imu.euler.yaw, info.imuDir, info.imuTargetDir, info.imuStatus);
 }
 
-// int count = 0;
-// void body_test() {
-//     if (count <= 50) {
-//         pc.printf(" KICK!!! %d\r\n", count);
-//         kicker[CHIP_KICKER].setPower(1.0); // power:0.0~1.0
-//         kicker[CHIP_KICKER].Kick();
-//         wait(20);
-//         count++;
-//     }
-// }
+#endif
+
+#ifdef MOTORTEST
+int count = 0;
+int amout = 1;
+int8_t p;
+void body_test() {
+    p = 0;
+    amout = 1;
+    pc.printf("MD0\r\n");
+    for (uint8_t i = 0; i < 200; i++) {
+        p += amout;
+        if (p <= -100 || p >= 100) {
+            amout = -amout;
+        }
+        MD.setMotors(info, p, 0, 0, 0);
+        wait_ms(10);
+    }
+    p = 0;
+    amout = 1;
+    pc.printf("MD1\r\n");
+    for (uint8_t i = 0; i < 200; i++) {
+        p += amout;
+        if (p <= -100 || p >= 100) {
+            amout = -amout;
+        }
+        MD.setMotors(info, 0, p, 0, 0);
+        wait_ms(10);
+    }
+    p = 0;
+    amout = 1;
+    pc.printf("MD2\r\n");
+    for (uint8_t i = 0; i < 200; i++) {
+        p += amout;
+        if (p <= -100 || p >= 100) {
+            amout = -amout;
+        }
+        MD.setMotors(info, 0, 0, p, 0);
+        wait_ms(10);
+    }
+    p = 0;
+    amout = 1;
+    pc.printf("MD3\r\n");
+    for (uint8_t i = 0; i < 200; i++) {
+        p += amout;
+        if (p <= -100 || p >= 100) {
+            amout = -amout;
+        }
+        MD.setMotors(info, 0, 0, 0, p);
+        wait_ms(10);
+    }
+}
+
+#endif
 
 void after_test() {
     // モードが切り替わり、bodyが実行し終えた直後に1度だけ実行する関数
