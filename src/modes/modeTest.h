@@ -66,7 +66,7 @@ void body_test() {
     p = 0;
     amout = 1;
     pc.printf("MD0\r\n");
-    for (uint8_t i = 0; i < 200; i++) {
+    for (int i = 0; i < 200; i++) {
         p += amout;
         if (p <= -100 || p >= 100) {
             amout = -amout;
@@ -77,7 +77,7 @@ void body_test() {
     p = 0;
     amout = 1;
     pc.printf("MD1\r\n");
-    for (uint8_t i = 0; i < 200; i++) {
+    for (int i = 0; i < 200; i++) {
         p += amout;
         if (p <= -100 || p >= 100) {
             amout = -amout;
@@ -88,7 +88,7 @@ void body_test() {
     p = 0;
     amout = 1;
     pc.printf("MD2\r\n");
-    for (uint8_t i = 0; i < 200; i++) {
+    for (int i = 0; i < 200; i++) {
         p += amout;
         if (p <= -100 || p >= 100) {
             amout = -amout;
@@ -99,7 +99,7 @@ void body_test() {
     p = 0;
     amout = 1;
     pc.printf("MD3\r\n");
-    for (uint8_t i = 0; i < 200; i++) {
+    for (int i = 0; i < 200; i++) {
         p += amout;
         if (p <= -100 || p >= 100) {
             amout = -amout;
