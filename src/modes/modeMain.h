@@ -34,13 +34,25 @@ void body_main() {
             kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
             kicker[CHIP_KICKER].Kick();
         }
-        dribler.write(info.driblePower); // power:0.0~1.0
+        // dribler.write(info.driblePower); // power:0.0~1.0
+        if (info.isHoldBall) {
+            dribbler.setPower(info.driblePower);
+        } else {
+            if (info.driblePower != 0) {
+                dribbler.setPower(0.3);
+            } else {
+                dribbler.setPower(0.0);
+            }
+        }
+
+        dribbler.dribble();
     } else {
         pc.printf("emergency!!!\t");
         MD.setVelocityZero();
         kicker[STRAIGHT_KICKER].setPower(0.0);
         kicker[CHIP_KICKER].setPower(0.0);
-        dribler.write(0);
+        // dribler.write(0);
+        dribbler.turnOff();
     }
     rasp.sendToRasp(info);
     pc.printf("%dus\r\n", timer.read_us());
@@ -55,14 +67,15 @@ void body_main() {
 void after_main() {
     // モードが切り替わり、bodyが実行し終えた直後に1度だけ実行する関数
     pc.printf("after main\r\n");
-    dribler.write(0);
+    // dribler.write(0);
+    dribbler.turnOff();
     MD.setVelocityZero();
 }
 
 // モード登録
 const RIMode modeMain = {
-    modeName : "mode_main", //モードの名前.コンソールで出力したりLCDに出せます.
-    modeLetter : 'M',       //モード実行のコマンド
+    modeName : "mode_main", // モードの名前.コンソールで出力したりLCDに出せます.
+    modeLetter : 'M',       // モード実行のコマンド
     before : callback(before_main),
     body : callback(body_main),
     after : callback(after_main)

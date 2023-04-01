@@ -4,7 +4,8 @@
 void setup() {
     swDrible.mode(PullUp);
     swKicker.mode(PullUp);
-    dribler.write(0);
+    // dribler.write(0);
+    dribbler.turnOff();
     pc.baud(2000000);
     imu.init();
     MD.setVelocityZero();
@@ -12,7 +13,7 @@ void setup() {
     imu.setZero();
     timer.start();
     pidDt.start();
-    tickCalcIMU.attach_us(&attitudeControl,6000);
+    tickCalcIMU.attach_us(&attitudeControl, 6000);
     setPIDGain();
 }
 

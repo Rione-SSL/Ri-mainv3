@@ -5,6 +5,7 @@
 // Libs
 #include "Servo.h"
 #include "LGKicker.h"
+#include "Dribbler.h"
 #include "raspSerial.h"
 #include "Motor.h"
 #include "RobotInfo.h"
@@ -35,7 +36,8 @@ DigitalOut raspBallDetectSig(RASPI_SIG);
 DigitalOut LED(LED1);
 
 LGKicker kicker[2] = {KICKER_STRAIGHT, KICKER_CHIP};
-Servo dribler(DRIB_PWM);
+Dribbler dribbler(DRIB_PWM);
+// Servo dribler(DRIB_PWM);
 
 // for test
 DigitalIn swDrible(TEST_DRIB);
@@ -64,14 +66,17 @@ void getSensors(RobotInfo &info) {
 
 void dribleOff() {
     // タイマー割り込みでドリブルをオフにする
-    dribler.write(0.0);
+    // dribler.write(0.0);
+    dribbler.turnOff();
 }
 
 void actuatorTests() {
     // dribler test
     if (swDrible.read() == false) {
         dribTimeout.attach(dribleOff, 1);
-        dribler.write(1.0);
+        // dribler.write(1.0);
+        dribbler.setPower(1.0);
+        dribbler.dribble();
     }
     // kicker test
     if (swKicker.read() == false) {

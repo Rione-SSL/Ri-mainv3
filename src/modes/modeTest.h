@@ -114,13 +114,14 @@ void body_test() {
 void after_test() {
     // モードが切り替わり、bodyが実行し終えた直後に1度だけ実行する関数
     pc.printf("after test\r\n");
-    dribler.write(0);
+    // dribler.write(0);
+    dribbler.turnOff();
     MD.setVelocityZero();
 }
 
 const RIMode modeTest = {
-    modeName : "mode_test", //モードの名前.コンソールで出力したりLCDに出せます.
-    modeLetter : 'T',       //モード実行のコマンド
+    modeName : "mode_test", // モードの名前.コンソールで出力したりLCDに出せます.
+    modeLetter : 'T',       // モード実行のコマンド
     before : callback(before_test),
     body : callback(body_test),
     after : callback(after_test)

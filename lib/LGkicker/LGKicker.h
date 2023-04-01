@@ -6,12 +6,11 @@ class LGKicker {
     LGKicker(PinName KickerPin);
     bool Kick(void);
     void setPower(float p);
+  private:
     PwmOut Kicker; // DigitalOut Kicker;
     Timer timer;
     bool enabled;
     float power;
-
-  private:
     Timeout Kicker_timeout;
     Timeout KickerIsRedey;
     void flip(void);
