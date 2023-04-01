@@ -11,6 +11,7 @@ void before_main() {
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
     int16_t m_turn = 0;
+    bool isKick = false;
     actuatorTests();
     getSensors(info);
     if (IMU_CALIBURATION) {
@@ -26,14 +27,6 @@ void body_main() {
         } else {
             MD.setVelocity(info, m_turn);
         }
-        if (info.kickerPower[STRAIGHT_KICKER] > 0) {
-            kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
-            kicker[STRAIGHT_KICKER].Kick();
-        }
-        if (info.kickerPower[CHIP_KICKER] > 0) {
-            kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
-            kicker[CHIP_KICKER].Kick();
-        }
         // dribler.write(info.driblePower); // power:0.0~1.0
         if (info.isHoldBall) {
             dribbler.setPower(info.driblePower);
@@ -44,8 +37,22 @@ void body_main() {
                 dribbler.setPower(0.0);
             }
         }
+        if (info.kickerPower[STRAIGHT_KICKER] > 0) {
+            isKick = true;
+            kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
+            kicker[STRAIGHT_KICKER].Kick();
+        }
+        if (info.kickerPower[CHIP_KICKER] > 0) {
+            isKick = true;
+            kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
+            kicker[CHIP_KICKER].Kick();
+        }
+        if (isKick == true) {
+            dribbler.turnOff();
+        } else {
+            dribbler.dribble();
+        }
 
-        dribbler.dribble();
     } else {
         pc.printf("emergency!!!\t");
         MD.setVelocityZero();
