@@ -9,11 +9,12 @@ class LGKicker {
 
   private:
     PwmOut Kicker; // DigitalOut Kicker;
+    Timeout KickerIsRedey;
+    Timeout Kicker_timeout;
     Timer timer;
     bool enabled;
     float power;
-    Timeout Kicker_timeout;
-    Timeout KickerIsRedey;
+
     void flip(void);
     void flipOn(void);
 };

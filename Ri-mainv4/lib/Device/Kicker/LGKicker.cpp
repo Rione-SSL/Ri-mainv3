@@ -2,7 +2,7 @@
 #include "LGKicker.h"
 
 LGKicker::LGKicker(PinName KickerPin)
-    : Kicker(KickerPin), KickerIsRedey(), Kicker_timeout(), timer() {
+    : Kicker(KickerPin), KickerIsRedey(), Kicker_timeout(), timer(), enabled(0), power(0) {
     Kicker = 0;
     timer.start();
     timer.reset();
