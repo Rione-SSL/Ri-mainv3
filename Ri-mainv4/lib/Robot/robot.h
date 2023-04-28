@@ -2,6 +2,7 @@
 #define ROBOT_H
 
 #include <mbed.h>
+#include "Devices.h"
 
 class Robot {
   public:
@@ -10,7 +11,7 @@ class Robot {
     void loop();
 
   private:
-    RawSerial pc;
+    // Devices devices;
 };
 
 #endif

@@ -14,7 +14,7 @@ class Devices {
   public:
     RawSerial pc;
     I2C i2c;
-    RaspSerial raspSerial;
+    raspSerial rasp;
     LGKicker kickerStraight;
     LGKicker kickerChip;
     Dribbler dribbler;
@@ -26,7 +26,7 @@ class Devices {
     Devices()
         : pc(USBTX, USBRX, BAUDLATE),
           i2c(I2C_SDA, I2C_SCL),
-          raspSerial(RASP_TX, RASP_RX, &pc, 9600),
+          rasp(RASP_TX, RASP_RX, &pc, 9600),
           kickerStraight(KICKER_STRAIGHT),
           kickerChip(KICKER_CHIP),
           dribbler(DRIB_PWM),
