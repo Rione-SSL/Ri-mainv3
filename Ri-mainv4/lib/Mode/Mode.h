@@ -4,21 +4,24 @@
 
 class Modes {
   public:
-    char getModeName() {
-        return *modeName;
+    Modes(char letter, const char name[]) : modeLetter(letter) {
+        strcpy(modeName, name);
     }
+
+    char *getModeName() {
+        return modeName;
+    }
+
     char getModeLetter() {
         return modeLetter;
     }
-    void setModeName(char *name, char letter) {
-        strcpy(modeName, name);
-        modeLetter = letter;
-    }
-    virtual void before();
-    virtual void loop();
-    virtual void after();
 
-  private:
+    virtual void init(){};
+    virtual void before(){};
+    virtual void loop(){};
+    virtual void after(){};
+
+  protected:
     char modeName[24];
     char modeLetter;
 };

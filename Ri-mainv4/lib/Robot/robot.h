@@ -3,6 +3,9 @@
 
 #include <mbed.h>
 #include "Devices.h"
+#include "Mode.h"
+
+#include "mainMode.h"
 
 class Robot {
   public:
