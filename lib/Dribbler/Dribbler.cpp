@@ -15,20 +15,21 @@ void Dribbler::setPower(float p) {
 }
 
 void Dribbler::dribble() {
-    if (targetPower >= 0.0) {
-        if (power < targetPower) {
-            if (timer.read_ms() > turnMaxInterval) {
-                power += 0.02;
-                timer.reset();
-            }
-        } else {
-            if (offTimer.read_ms() > 600) power = targetPower;
-        }
-    } else {
-        targetPower = 0;
-        power = 0;
-    }
-    motor.write(power);
+    // if (targetPower >= 0.0) {
+    //     if (power < targetPower) {
+    //         if (timer.read_ms() > turnMaxInterval) {
+    //             power += 0.02;
+    //             timer.reset();
+    //         }
+    //     } else {
+    //         if (offTimer.read_ms() > 600) power = targetPower;
+    //     }
+    // } else {
+    //     targetPower = 0;
+    //     power = 0;
+    // }
+    // motor.write(power);
+    motor.write(targetPower);
 }
 
 void Dribbler::turnOff() {
