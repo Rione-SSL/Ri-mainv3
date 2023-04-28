@@ -1,10 +1,10 @@
-#ifndef MODES_H
-#define MODES_H
+#ifndef MODE_H
+#define MODE_H
 #include <mbed.h>
 
-class Modes {
+class Mode {
   public:
-    Modes(char letter, const char name[]) : modeLetter(letter) {
+    Mode(char letter, const char name[]) : modeLetter(letter) {
         strcpy(modeName, name);
     }
 

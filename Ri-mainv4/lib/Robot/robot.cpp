@@ -1,6 +1,6 @@
 #include <robot.h>
 
-Modes modes[1] = {
+Mode modes[] = {
     MainMode('m', "MainMode")};
 
 Robot::Robot() {}

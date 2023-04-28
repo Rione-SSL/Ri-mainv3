@@ -5,8 +5,10 @@
 #include "Devices.h"
 #include "Mode.h"
 
-#include "mainMode.h"
+#define MODE_QTY 1
 
+#include "mainMode.h"
+extern Mode modes[];
 class Robot {
   public:
     Robot();

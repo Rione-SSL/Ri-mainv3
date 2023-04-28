@@ -3,9 +3,9 @@
 
 #include "Mode.h"
 #include "Devices.h"
-class MainMode : public Modes {
+class MainMode : public Mode {
   public:
-    MainMode(char letter, const char name[]) : Modes(letter, name) {}
+    MainMode(char letter, const char name[]) : Mode(letter, name) {}
     void init() {
         devices.pc.printf("Resistored : '%c' as %s\n", getModeLetter(), getModeName());
     }
