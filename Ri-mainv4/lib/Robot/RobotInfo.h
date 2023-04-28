@@ -1,5 +1,4 @@
-#ifndef DEFINE_H
-#define DEFINE_H
+#pragma once
 
 #include <mbed.h>
 
@@ -58,4 +57,4 @@ typedef struct {
     // 0:正の角度 1:負の角度 2:IMU0度設定
 } RobotInfo;
 
-#endif
+extern RobotInfo info;
