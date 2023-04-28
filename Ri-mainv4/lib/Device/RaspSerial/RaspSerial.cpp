@@ -1,13 +1,19 @@
-#include "raspSerial.h"
+#include "RaspSerial.h"
 
-raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc) : device(TX, RX) {
+raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc)
+    : device(TX, RX),
+      pc(_pc),
+      bufferCount(0),
+      info() {
     device.baud(115200);                                   // 通信速度最速
     device.attach(callback(this, &raspSerial::receiveRx)); // 角度割り込み入力
-    pc = _pc;
-    bufferCount = 0;
 }
 
-raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud) : device(TX, RX) {
+raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud)
+    : device(TX, RX),
+      pc(_pc),
+      bufferCount(0),
+      info() {
     device.baud(baud);                                     // 通信速度最速
     device.attach(callback(this, &raspSerial::receiveRx)); // 角度割り込み入力
     pc = _pc;
@@ -98,7 +104,7 @@ void raspSerial::receiveRx() {
 
 void raspSerial::sendToRasp(RobotInfo info) {
     uint8_t buffer[6];
-    char startBytes[4]{0xFF, 0, 0xFF, 0};
+    char startBytes[4] = {0xFF, 0, 0xFF, 0};
     buffer[0] = info.volt;
     buffer[1] = info.photoSensor >> 8;     // MSB
     buffer[2] = info.photoSensor & 0x00FF; // LSB
@@ -134,7 +140,15 @@ void raspSerial::sendToRasp(RobotInfo info) {
 //     }
 // }
 
-void raspSerial::put(int val) { device.putc(val); }
-void raspSerial::get(float &a, int num) { a = info.motor[num]; }
-void raspSerial::print(float val) { device.printf("%f\r\n", val); }
-void raspSerial::syncFromRasp(RobotInfo &_info) { _info = info; }
+void raspSerial::put(int val) {
+    device.putc(val);
+}
+void raspSerial::get(float &a, int num) {
+    a = info.motor[num];
+}
+void raspSerial::print(float val) {
+    device.printf("%f\r\n", val);
+}
+void raspSerial::syncFromRasp(RobotInfo &_info) {
+    _info = info;
+}

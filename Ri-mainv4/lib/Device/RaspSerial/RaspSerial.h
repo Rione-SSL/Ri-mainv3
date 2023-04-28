@@ -2,12 +2,12 @@
 #define _RASPSERIAL_
 
 #include "mbed.h"
-#include "../RobotInfo.h"
+#include "RobotInfo.h"
 
-class RaspSerial {
+class raspSerial {
   public:
-    RaspSerial(PinName TX, PinName RX, RawSerial *_pc);
-    RaspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud);
+    raspSerial(PinName TX, PinName RX, RawSerial *_pc);
+    raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud);
     void receiveRx();
     void put(int val);
     void get(float &a, int num);
@@ -22,18 +22,9 @@ class RaspSerial {
     // ここ元々intだったのですが8bitの変数しか扱えない空間でint(32bit)はアウトなのでuint8_tにしておきます。
     //  uint8_t buffer[64];
     RawSerial device;
-    int8_t bufferCount;
     RawSerial *pc;
-    RobotInfo info = {
-        .motor = {0, 0, 0, 0},
-        .driblePower = 0,
-        .kickerPower = {0, 0},
-        .volt = 0,
-        .photoSensor = 0,
-        .isHoldBall = 0,
-        .imuDir = 0,
-        .emergency = 0,
-    };
+    int8_t bufferCount;
+    RobotInfo info;
 };
 
 #endif
