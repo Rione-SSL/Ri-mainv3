@@ -34,7 +34,14 @@ class Devices {
           imu(&i2c),
           LED(LED1),
           voltIn(VOLT_IN){};
-    void init();
+
+    void init() {
+        i2c.frequency(400000);
+        imu.init();
+        MD.setMotors(info, 0, 0, 0, 0);
+    }
 };
+
+extern Devices devices;
 
 #endif
