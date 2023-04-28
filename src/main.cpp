@@ -13,7 +13,7 @@ void setup() {
     imu.setZero();
     timer.start();
     pidDt.start();
-    tickCalcIMU.attach_us(&attitudeControl, 6000);
+    tickCalcIMU.attach_us(&attitudeControl, 10000);
     setPIDGain();
 }
 

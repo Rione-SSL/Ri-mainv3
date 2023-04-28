@@ -3,12 +3,12 @@
 #include "mbed.h"
 
 typedef struct {
-    float rawData;  //コンパスのデータ
-    float lastData; //前回
+    float rawData;  // コンパスのデータ
+    float lastData; // 前回
     float currentData;
     float out;
-    int16_t target;     //目標点
-    int16_t targetPrev; //目標点
+    int16_t target;     // 目標点
+    int16_t targetPrev; // 目標点
     float differential;
 
     float totalError;
@@ -50,9 +50,9 @@ void setTargetDir(int16_t target) {
 }
 
 void setPIDGain() {
-    pidDir.Kp = -0.3;
+    pidDir.Kp = -0.6;
     pidDir.Kd = 0.05;
-    pidDir.Ki = -1.0;
+    pidDir.Ki = -0.35;
     // pidDir.Kp = -0.3;
     // pidDir.Kd = 0.05;
     // pidDir.Ki = 0;
@@ -61,12 +61,12 @@ void setPIDGain() {
 void attitudeControl() {
     if (imuDirEnable) {
         pidDir.currentData = degBetween_signed(pidDir.rawData, pidDir.target);
-        pidDir.differential = (pidDir.lastData - pidDir.currentData) / 0.006;
+        pidDir.differential = (pidDir.lastData - pidDir.currentData) / 0.01;
         pidDir.lastData = pidDir.currentData;
 
-        if (abs(pidDir.currentData) < 30 && pidDir.target == pidDir.targetPrev) { //目標からの誤差が大きい時に積分をすると発散してしまうので無理やり計算しないようにした
+        if (abs(pidDir.currentData) < 30 && pidDir.target == pidDir.targetPrev) { // 目標からの誤差が大きい時に積分をすると発散してしまうので無理やり計算しないようにした
             if (pidDir.currentData != 0) {
-                if (abs(pidDir.I) < 30) pidDir.totalError += pidDir.currentData * 0.006; // 無限に発散されると困るので上限をつけた
+                if (abs(pidDir.I) < 30) pidDir.totalError += pidDir.currentData * 0.01; // 無限に発散されると困るので上限をつけた
             } else {
                 pidDir.totalError = 0; // 0の時に10とか残ってたりするからリセットかけるようにした
             }
