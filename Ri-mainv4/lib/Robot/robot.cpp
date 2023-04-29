@@ -1,14 +1,21 @@
 #include <robot.h>
 
-Mode modes[] = {
-    MainMode('m', "MainMode")};
+MainMode mainMode('m', "MainMode");
+Mode *modes[] = {
+    &mainMode};
 
-Robot::Robot() {}
+Robot::Robot() {
+}
 
 void Robot::setup() {
-    modes[0].init();
+    devices.pc.baud(BAUDLATE);
+    devices.pc.printf("Hello World!\n");
+    for (int i = 0; i < MODE_QTY; i++) {
+        modes[i]->init();
+    }
 }
 
 void Robot::loop() {
-    modes[0].loop();
+    modes[0]->loop();
+    // mainMode.loop();
 }

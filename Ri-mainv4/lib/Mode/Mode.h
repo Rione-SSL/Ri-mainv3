@@ -18,7 +18,9 @@ class Mode {
 
     virtual void init(){};
     virtual void before(){};
-    virtual void loop(){};
+    virtual void loop(){
+
+    };
     virtual void after(){};
 
   protected:

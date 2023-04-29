@@ -8,7 +8,7 @@
 #define MODE_QTY 1
 
 #include "mainMode.h"
-extern Mode modes[];
+extern Mode *modes[];
 class Robot {
   public:
     Robot();
