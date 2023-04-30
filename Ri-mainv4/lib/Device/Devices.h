@@ -12,7 +12,7 @@
 
 class Devices {
   public:
-    RawSerial pc;
+    Serial pc;
     I2C i2c;
     raspSerial rasp;
     LGKicker kickerStraight;
