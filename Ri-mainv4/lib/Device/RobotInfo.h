@@ -4,6 +4,8 @@
 
 // parameters
 #define BAUDLATE 230400
+#define BALL_DETECT_VALUE 700
+#define BATTERY_THRESHOLD 132 // 13.2V
 
 // pinNames
 #define CAN_TX PA_11
