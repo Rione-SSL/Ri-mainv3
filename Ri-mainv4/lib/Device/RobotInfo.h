@@ -3,7 +3,7 @@
 #include <mbed.h>
 
 // parameters
-#define BAUDLATE 2000000
+#define BAUDLATE 230400
 
 // pinNames
 #define CAN_TX PA_11
