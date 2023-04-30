@@ -16,7 +16,15 @@ class Robot {
     void loop();
 
   private:
-    // Devices devices;
+    char buffer[64];
+    volatile bool data_received;
+
+    void pcRxIrq() {
+        if (devices.pc.readable()) {
+            devices.pc.gets(buffer, sizeof(buffer));
+            data_received = true;
+        }
+    }
 };
 
 #endif
