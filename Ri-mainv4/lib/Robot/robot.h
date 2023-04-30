@@ -19,12 +19,7 @@ class Robot {
     char buffer[64];
     volatile bool data_received;
 
-    void pcRxIrq() {
-        if (devices.pc.readable()) {
-            devices.pc.gets(buffer, sizeof(buffer));
-            data_received = true;
-        }
-    }
+    void pcRxIrq();
 };
 
 #endif

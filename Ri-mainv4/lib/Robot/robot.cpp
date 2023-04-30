@@ -28,3 +28,10 @@ void Robot::loop() {
     }
     // mainMode.loop();
 }
+
+void Robot::pcRxIrq() {
+    if (devices.pc.readable()) {
+        devices.pc.gets(buffer, sizeof(buffer));
+        data_received = true;
+    }
+}
