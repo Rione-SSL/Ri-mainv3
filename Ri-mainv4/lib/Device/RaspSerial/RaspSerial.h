@@ -6,8 +6,8 @@
 
 class raspSerial {
   public:
-    raspSerial(PinName TX, PinName RX, RawSerial *_pc);
-    raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud);
+    raspSerial(PinName TX, PinName RX, Serial *_pc);
+    raspSerial(PinName TX, PinName RX, Serial *_pc, int baud);
     void receiveRx();
     void put(int val);
     void get(float &a, int num);
@@ -21,8 +21,8 @@ class raspSerial {
     static const int8_t BUFFER_SIZE = 11;
     // ここ元々intだったのですが8bitの変数しか扱えない空間でint(32bit)はアウトなのでuint8_tにしておきます。
     //  uint8_t buffer[64];
-    RawSerial device;
-    RawSerial *pc;
+    Serial device;
+    Serial *pc;
     int8_t bufferCount;
     RobotInfo info;
 };

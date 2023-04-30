@@ -1,6 +1,6 @@
 #include "RaspSerial.h"
 
-raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc)
+raspSerial::raspSerial(PinName TX, PinName RX, Serial *_pc)
     : device(TX, RX),
       pc(_pc),
       bufferCount(0),
@@ -9,7 +9,7 @@ raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc)
     device.attach(callback(this, &raspSerial::receiveRx)); // 角度割り込み入力
 }
 
-raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud)
+raspSerial::raspSerial(PinName TX, PinName RX, Serial *_pc, int baud)
     : device(TX, RX),
       pc(_pc),
       bufferCount(0),
