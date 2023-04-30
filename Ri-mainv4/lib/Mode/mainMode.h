@@ -22,4 +22,6 @@ class MainMode : public Mode {
   private:
 };
 
+extern MainMode mainMode;
+
 #endif

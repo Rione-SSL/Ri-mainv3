@@ -6,9 +6,10 @@
 #include "Mode.h"
 
 #define MODE_QTY 1
+extern Mode *modes[MODE_QTY];
 
 #include "mainMode.h"
-extern Mode *modes[];
+
 class Robot {
   public:
     Robot();
@@ -16,10 +17,15 @@ class Robot {
     void loop();
 
   private:
+    char modeLetter;
+    Mode *currentMode;
+    Mode *prevMode;
+
     char buffer[64];
     volatile bool data_received;
 
     void pcRxIrq();
+    void doCommand(const char command[]);
 };
 
 #endif
