@@ -14,7 +14,7 @@ Devices::Devices()
       MD(CAN_TX, CAN_RX, MOTOR_TEST_SW),
       imu(&i2c),
       LED(LED1),
-      voltIn(VOLT_IN){};
+      battery(VOLT_IN, BATTERY_THRESHOLD){};
 
 void Devices::init() {
     i2c.frequency(400000);
@@ -28,5 +28,6 @@ void Devices::getSensors(RobotInfo &info) {
     info.isHoldBall = ball.getState();
     info.imuDirPrev = info.imuDir;
     info.imuDir = imu.getDeg();
-    //     info.volt = readBatteryVoltage();
+    info.volt = battery.getVoltage();
+    info.isLowBattery = battery.isLow();
 }

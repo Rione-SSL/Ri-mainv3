@@ -8,6 +8,7 @@
 #include "LGIMU.h"
 #include "LGKIcker.h"
 #include "RaspSerial.h"
+#include "Battery.h"
 
 #include "RobotInfo.h"
 
@@ -23,7 +24,7 @@ class Devices {
     Motor MD;
     BNO055 imu;
     DigitalOut LED;
-    AnalogIn voltIn;
+    Battery battery;
 
     Devices();
 
