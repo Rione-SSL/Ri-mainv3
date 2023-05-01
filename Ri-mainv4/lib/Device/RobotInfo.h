@@ -4,8 +4,14 @@
 
 // parameters
 #define BAUDLATE 230400
+#define RASP_BAUDRATE 9600
 #define BALL_DETECT_VALUE 700
 #define BATTERY_THRESHOLD 132 // 13.2V
+
+#define IMU_PERIOD 0.01
+#define IMU_KP 0.4
+#define IMU_KI 0.5
+#define IMU_KD 0.7
 
 // pinNames
 #define CAN_TX PA_11

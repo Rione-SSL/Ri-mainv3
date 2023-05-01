@@ -9,6 +9,7 @@
 #include "LGKIcker.h"
 #include "RaspSerial.h"
 #include "Battery.h"
+#include "PID.h"
 
 #include "RobotInfo.h"
 
@@ -25,12 +26,14 @@ class Devices {
     BNO055 imu;
     DigitalOut LED;
     Battery battery;
+    PID attitudePID;
 
     Devices();
 
     void init();
 
     void getSensors(RobotInfo &info);
+    int16_t getAttitudeCtrl(RobotInfo &info);
 };
 
 extern Devices devices;

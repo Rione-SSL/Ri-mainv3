@@ -21,12 +21,16 @@ class Mode {
     };
     virtual void before() {
         devices.pc.printf("before %s\n", getModeName());
+        devices.imu.setZero();
+        devices.attitudePID.reset();
     };
     virtual void loop() {
         devices.pc.printf("loop %s\n", getModeName());
     };
     virtual void after() {
         devices.pc.printf("after %s\n", getModeName());
+        devices.dribbler.turnOff();
+        devices.MD.setVelocityZero();
     };
 
   protected:

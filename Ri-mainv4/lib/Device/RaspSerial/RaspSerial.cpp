@@ -102,7 +102,7 @@ void raspSerial::receiveRx() {
     // }
 }
 
-void raspSerial::sendToRasp(RobotInfo info) {
+void raspSerial::send(RobotInfo info) {
     uint8_t buffer[6];
     char startBytes[4] = {0xFF, 0, 0xFF, 0};
     buffer[0] = info.volt;
@@ -122,7 +122,7 @@ void raspSerial::sendToRasp(RobotInfo info) {
     }
 }
 
-// void raspSerial::sendToRasp(RobotInfo info) {
+// void raspSerial::send(RobotInfo info) {
 //     uint8_t buffer[6];
 //     uint8_t startBytes[4] {0xFF,0,0xFF,0};
 //     buffer[0] = 10;
@@ -149,6 +149,6 @@ void raspSerial::get(float &a, int num) {
 void raspSerial::print(float val) {
     device.printf("%f\r\n", val);
 }
-void raspSerial::syncFromRasp(RobotInfo &_info) {
+void raspSerial::sync(RobotInfo &_info) {
     _info = info;
 }

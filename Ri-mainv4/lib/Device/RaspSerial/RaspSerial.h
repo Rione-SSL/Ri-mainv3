@@ -12,8 +12,8 @@ class raspSerial {
     void put(int val);
     void get(float &a, int num);
     void print(float val);
-    void syncFromRasp(RobotInfo &_info);
-    void sendToRasp(RobotInfo info);
+    void sync(RobotInfo &_info);
+    void send(RobotInfo info);
     uint8_t buffer[64];
     uint8_t recievedData;
 
