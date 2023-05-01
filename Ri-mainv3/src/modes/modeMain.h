@@ -37,20 +37,22 @@ void body_main() {
                 dribbler.setPower(0.0);
             }
         }
-        if (info.kickerPower[STRAIGHT_KICKER] > 0) {
-            isKick = true;
-            kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
-            kicker[STRAIGHT_KICKER].Kick();
-        }
-        if (info.kickerPower[CHIP_KICKER] > 0) {
-            isKick = true;
-            kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
-            kicker[CHIP_KICKER].Kick();
-        }
-        if (isKick == true) {
-            dribbler.turnOff();
-        } else {
-            dribbler.dribble();
+        if (info.isHoldBall) {
+            if (info.kickerPower[STRAIGHT_KICKER] > 0) {
+                isKick = true;
+                kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER]);
+                kicker[STRAIGHT_KICKER].Kick();
+            }
+            if (info.kickerPower[CHIP_KICKER] > 0) {
+                isKick = true;
+                kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER]);
+                kicker[CHIP_KICKER].Kick();
+            }
+            if (isKick == true) {
+                dribbler.turnOff();
+            } else {
+                dribbler.dribble();
+            }
         }
 
     } else {
