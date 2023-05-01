@@ -2,6 +2,7 @@
 
 RobotInfo info;
 Devices devices;
+asm(".global _printf_float"); // enables float printing
 
 Devices::Devices()
     : pc(USBTX, USBRX, BAUDLATE),
