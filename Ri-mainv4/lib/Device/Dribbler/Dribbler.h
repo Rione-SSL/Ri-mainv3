@@ -6,19 +6,22 @@ class Dribbler {
   public:
     Dribbler(PinName dribblerPin);
     void setPower(float p);
+    void setAccelerationStep(uint8_t interval);
+    void disableAcceleration();
 
     void dribble();
     void turnOff();
     float getPower();
 
   private:
+    Servo motor;
     float targetPower;
     float targetPowerPrev;
     float power;
-    uint8_t turnMaxInterval;
+    uint8_t accelerationStep;
     Timer timer;
-    Servo motor;
     Timer offTimer;
+    bool accelerrationEnabled;
 };
 
 #endif
