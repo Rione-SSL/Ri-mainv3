@@ -53,6 +53,15 @@ void Robot::loop() {
     devices.pc.printf("loop\n");
 }
 
+/*
+:TODO:
+- ドリブラのテスト
+- モータのテスト
+- フォトセンサ(ボールセンサ)のテスト
+- キッカーのテスト
+- PIDゲインの変更(一時的な物)
+- 全てのセンサのモニタリング
+*/
 void Robot::doCommand(const char command[]) {
     if (strcmp(command, "hello") == 0) {
         devices.pc.printf("Hello World!\n");
