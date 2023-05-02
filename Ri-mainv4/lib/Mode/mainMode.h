@@ -11,8 +11,8 @@ class MainMode : public Mode {
     }
     void before() {
         devices.pc.printf("before MainMode\n");
-        devices.imu.setZero();
-        devices.attitudePID.reset();
+        // devices.imu.setZero();
+        // devices.attitudePID.reset();
     }
     void loop() {
         devices.getSensors(info);

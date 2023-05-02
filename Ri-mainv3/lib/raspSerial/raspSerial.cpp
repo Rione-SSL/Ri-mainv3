@@ -1,20 +1,20 @@
 #include "raspSerial.h"
 
 raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc) : device(TX, RX) {
-    device.baud(115200);                                   //通信速度最速
-    device.attach(callback(this, &raspSerial::receiveRx)); //角度割り込み入力
+    device.baud(115200);                                   // 通信速度最速
+    device.attach(callback(this, &raspSerial::receiveRx)); // 角度割り込み入力
     pc = _pc;
     bufferCount = 0;
 }
 
 raspSerial::raspSerial(PinName TX, PinName RX, RawSerial *_pc, int baud) : device(TX, RX) {
-    device.baud(baud);                                     //通信速度最速
-    device.attach(callback(this, &raspSerial::receiveRx)); //角度割り込み入力
+    device.baud(baud);                                     // 通信速度最速
+    device.attach(callback(this, &raspSerial::receiveRx)); // 角度割り込み入力
     pc = _pc;
     bufferCount = 0;
 }
 
-//受信割り込み関数
+// 受信割り込み関数
 void raspSerial::receiveRx() {
     // bufferCount++;
     // if (bufferCount > BUFFER_SIZE) bufferCount = 0;
@@ -105,7 +105,7 @@ void raspSerial::sendToRasp(RobotInfo info) {
     buffer[3] = info.isHoldBall;
     buffer[4] = (int16_t)(info.imuDir) >> 8;     // MSB
     buffer[5] = (int16_t)(info.imuDir) & 0x00FF; // LSB
-    //送信バッファに溜まったデータを送信
+    // 送信バッファに溜まったデータを送信
     for (int i = 0; i < 4; i++) {
         device.putc(startBytes[i]);
         // wait_us(500);
