@@ -21,7 +21,9 @@ Devices::Devices()
 void Devices::init() {
     i2c.frequency(400000);
     imu.init();
-    MD.setMotors(info, 0, 0, 0, 0);
+    imu.setZero();
+    dribbler.turnOff();
+    MD.setVelocityZero();
     ball.setThreshold(BALL_DETECT_VALUE);
     attitudePID.reset();
 }
