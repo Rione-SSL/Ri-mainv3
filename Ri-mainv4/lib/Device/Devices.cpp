@@ -22,6 +22,8 @@ void Devices::init() {
     i2c.frequency(400000);
     imu.init();
     imu.setZero();
+    dribbler.disableAcceleration();
+    dribbler.setAccelerationStep(DRIB_ACCELERATION_STEP);
     dribbler.turnOff();
     MD.setVelocityZero();
     ball.setThreshold(BALL_DETECT_VALUE);
