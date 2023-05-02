@@ -22,7 +22,7 @@ class Mode {
     virtual void before() {
         devices.pc.printf("before %s\n", getModeName());
         devices.imu.setZero();
-        devices.attitudePID.reset();
+        // devices.attitudePID.reset();
     };
     virtual void loop() {
         devices.pc.printf("loop %s\n", getModeName());

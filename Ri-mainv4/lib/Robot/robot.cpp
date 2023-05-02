@@ -1,6 +1,6 @@
 #include <robot.h>
 
-MainMode mainMode('m', "MainMode");
+MainMode mainMode('M', "MainMode");
 
 Mode *modes[MODE_QTY] = {&mainMode};
 
@@ -32,12 +32,15 @@ void Robot::loop() {
         doCommand(buffer);
         wait(1);
     } else {
-        mainMode.loop();
         for (size_t i = 0; i < MODE_QTY; i++) {
             if (modes[i]->getModeLetter() == modeLetter) {
                 currentMode = modes[i];
                 break;
             }
+        }
+
+        if (currentMode == NULL) {
+            currentMode = &mainMode;
         }
         if (currentMode != prevMode) {
             if (prevMode != NULL) prevMode->after();
@@ -47,6 +50,7 @@ void Robot::loop() {
         }
         prevMode = currentMode;
     }
+    devices.pc.printf("loop\n");
 }
 
 void Robot::doCommand(const char command[]) {

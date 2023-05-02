@@ -16,7 +16,7 @@ Devices::Devices()
       imu(&i2c),
       LED(LED1),
       battery(VOLT_IN, BATTERY_THRESHOLD),
-      attitudePID(IMU_KP, IMU_KI, IMU_KD, IMU_PERIOD, NULL){};
+      attitudePID(IMU_KP, IMU_KI, IMU_KD, IMU_PERIOD, &pc){};
 
 void Devices::init() {
     i2c.frequency(400000);
@@ -32,7 +32,7 @@ void Devices::getSensors(RobotInfo &info) {
     info.photoSensor = ball.getSensor();
     info.isHoldBall = ball.getState();
     info.imuDirPrev = info.imuDir;
-    info.imuDir = imu.getDeg();
+    // info.imuDir = imu.getDeg();
     info.volt = battery.getVoltage();
     info.isLowBattery = battery.isLow();
 }
@@ -41,4 +41,5 @@ void Devices::getSensors(RobotInfo &info) {
 int16_t Devices::getAttitudeCtrl(RobotInfo &info) {
     attitudePID.appendError(gapDegrees180(info.imuTargetDir, info.imuDir));
     return (int16_t)(attitudePID.getPID());
+    return 1;
 }
