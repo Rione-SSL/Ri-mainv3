@@ -10,9 +10,9 @@
 #define DRIB_ACCELERATION_STEP 15 // ms
 
 #define IMU_PERIOD 0.01
-#define IMU_KP 0.4
-#define IMU_KI 0.5
-#define IMU_KD 0.7
+#define IMU_KP 0.45
+#define IMU_KI 0.02
+#define IMU_KD 0.03
 
 // pinNames
 #define CAN_TX PA_11
@@ -57,6 +57,7 @@ typedef struct {
     // ボールを持っているか
     float imuDir;
     float imuDirPrev;
+    float imuAnglerVelocity;
     // PID制御するためにfloat型である必要がある。
     float imuTargetDir;
     // PID制御するためにfloat型である必要がある。

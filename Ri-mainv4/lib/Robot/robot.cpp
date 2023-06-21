@@ -17,12 +17,14 @@ void Robot::setup() {
     devices.pc.printf("STM32 works with %ld MHz clock\r\n", (SystemCoreClock / 1000000));
     wait_ms(100);
     devices.pc.printf("-----------------------------------------------\r\n");
-    devices.pc.attach(callback(this, &Robot::pcRxIrq), Serial::RxIrq);
+    // devices.pc.attach(callback(this, &Robot::pcRxIrq), Serial::RxIrq);
+
     for (int i = 0; i < MODE_QTY; i++) {
         modes[i]->init();
     }
     prevMode = NULL;
     currentMode = NULL;
+    devices.init();
 }
 
 void Robot::loop() {
@@ -50,7 +52,7 @@ void Robot::loop() {
         }
         prevMode = currentMode;
     }
-    devices.pc.printf("loop\n");
+    // devices.pc.printf("loop\n");
 }
 
 /*
