@@ -36,3 +36,12 @@ void LGKicker::flip(void) {
 void LGKicker::setPower(float p) {
     power = (p < 0.0 ? 0.0 : (p > 1.0 ? 1.0 : p));
 }
+
+void LGKicker::discharge(void) {
+    Kicker = 0;
+    setPower(0.15);
+    for (size_t i = 0; i < 250; i++) {
+        KickerIsRedey.attach_us(callback(this, &LGKicker::flipOn), 2000);
+        wait(0.05);
+    }
+}

@@ -10,10 +10,15 @@ void before_main() {
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 void body_main() {
+
     int16_t m_turn = 0;
     bool isKick = false;
     actuatorTests();
     getSensors(info);
+    if (!swKicker) {
+        kicker[STRAIGHT_KICKER].discharge();
+        pc.printf("discharge!!!\n");
+    }
     if (IMU_CALIBURATION) {
         imu.setDeg(info.imuTargetDir);
     }

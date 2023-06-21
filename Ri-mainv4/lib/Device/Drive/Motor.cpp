@@ -62,6 +62,27 @@ void Motor::sendMotorValues() {
         motors.M3.vel = 0;
         motors.M4.vel = 0;
     }
+    int hosho = 8;
+    if (motors.M1.vel > 0 && motors.M1.vel < hosho) {
+        motors.M1.vel = hosho;
+    } else if (motors.M1.vel < 0 && motors.M1.vel > -hosho) {
+        motors.M1.vel = -hosho;
+    }
+    if (motors.M2.vel > 0 && motors.M2.vel < hosho) {
+        motors.M2.vel = hosho;
+    } else if (motors.M2.vel < 0 && motors.M2.vel > -hosho) {
+        motors.M1.vel = -hosho;
+    }
+    if (motors.M3.vel > 0 && motors.M3.vel < hosho) {
+        motors.M3.vel = hosho;
+    } else if (motors.M3.vel < 0 && motors.M3.vel > -hosho) {
+        motors.M1.vel = -hosho;
+    }
+    if (motors.M4.vel > 0 && motors.M4.vel < hosho) {
+        motors.M4.vel = hosho;
+    } else if (motors.M4.vel < 0 && motors.M4.vel > -hosho) {
+        motors.M1.vel = -hosho;
+    }
     send_motvel_data[0] = motors.M1.vel8_t.L;
     send_motvel_data[1] = motors.M1.vel8_t.H;
     send_motvel_data[2] = motors.M2.vel8_t.L;
