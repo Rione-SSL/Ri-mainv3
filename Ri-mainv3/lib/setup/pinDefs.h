@@ -13,8 +13,8 @@
 #define KICKER_CHIP PB_4
 #define DRIB_PWM D6
 
-#define TEST_DRIB D7
-#define TEST_KICK D8
+#define TEST_DRIB PF_1
+#define TEST_KICK PA_1
 
 #define RASP_TX D1
 #define RASP_RX D0
