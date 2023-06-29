@@ -9,16 +9,15 @@ void before_main() {
     imu.setZero();
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
+
 void body_main() {
 
     int16_t m_turn = 0;
     bool isKick = false;
+    bool isDrible = false;
     actuatorTests();
     getSensors(info);
-    if (!swKicker) {
-        kicker[STRAIGHT_KICKER].discharge();
-        pc.printf("discharge!!!\n");
-    }
+
     if (IMU_CALIBURATION) {
         imu.setDeg(info.imuTargetDir);
     }
@@ -42,22 +41,23 @@ void body_main() {
                 dribbler.setPower(0.0);
             }
         }
-        if (info.kickerPower[STRAIGHT_KICKER] > 1.5 || info.kickerPower[CHIP_KICKER] > 1.5) {
+
+        if (info.kickerPower[STRAIGHT_KICKER] >= 20 || info.kickerPower[CHIP_KICKER] >= 20) {
             if (info.isHoldBall) {
                 if (info.kickerPower[STRAIGHT_KICKER] > 0) {
                     isKick = true;
-                    kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER] - 1.0);
+                    kicker[STRAIGHT_KICKER].setPower(info.kickerPower[STRAIGHT_KICKER] - 20);
                     kicker[STRAIGHT_KICKER].Kick();
                 }
                 if (info.kickerPower[CHIP_KICKER] > 0) {
                     isKick = true;
-                    kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER] - 1.0);
+                    kicker[CHIP_KICKER].setPower(info.kickerPower[CHIP_KICKER] - 20);
                     kicker[CHIP_KICKER].Kick();
                 }
                 if (isKick == true) {
-                    dribbler.turnOff();
+                    isDrible = false;
                 } else {
-                    dribbler.dribble();
+                    isDrible = true;
                 }
             }
         } else {
@@ -72,10 +72,27 @@ void body_main() {
                 kicker[CHIP_KICKER].Kick();
             }
             if (isKick == true) {
-                dribbler.turnOff();
+                isDrible = false;
             } else {
-                dribbler.dribble();
+                isDrible = true;
             }
+        }
+
+        if (swKicker.read() == false) {
+            // スイッチが押されたら
+            MD.setVelocityZero();
+            kicker[STRAIGHT_KICKER].discharge();
+            pc.printf("discharge!!!\n");
+        }
+        if (swDrible.read() == false) {
+            // スイッチが押されたら
+            dribbler.setPower(0.3);
+            isDrible = true;
+        }
+        if (isDrible == true) {
+            dribbler.dribble();
+        } else {
+            dribbler.turnOff();
         }
 
     } else {
