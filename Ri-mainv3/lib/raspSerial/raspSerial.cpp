@@ -34,8 +34,8 @@ void raspSerial::receiveRx() {
             info.motor[2] = (int16_t)buffer[3] - 100.0;
             info.motor[3] = (int16_t)buffer[4] - 100.0;
             info.driblePower = (float)buffer[5] / 100;
-            info.kickerPower[STRAIGHT_KICKER] = (float)buffer[6] / 100;
-            info.kickerPower[CHIP_KICKER] = (float)buffer[7] / 100;
+            info.kickerPower[STRAIGHT_KICKER] = (float)buffer[6] / 10;
+            info.kickerPower[CHIP_KICKER] = (float)buffer[7] / 10;
             // if (buffer[9] == 3) {
             //     info.imuTargetDir = 0;
             // } else {

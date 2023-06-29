@@ -82,6 +82,8 @@ void actuatorTests() {
     if (swKicker.read() == false) {
         kicker[STRAIGHT_KICKER].Kick();
     }
+
+    
 }
 
 #endif
