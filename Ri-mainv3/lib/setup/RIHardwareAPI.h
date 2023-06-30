@@ -10,13 +10,14 @@
 #include "Motor.h"
 #include "RobotInfo.h"
 #include "LGIMU.h"
+#include "Ball.h"
 
 #include "pinDefs.h"
 #include "setup_common.h"
 #include "mbed.h"
 #include "RIMode.h"
 
-#define BALL_DETECT_VALUE 700
+#define BALL_DETECT_VALUE 960
 #define STRAIGHT_KICKER 0
 #define CHIP_KICKER 1
 #define BATTERY_THRESHOLD 132 // 13.2V
@@ -31,9 +32,10 @@ I2C i2c(I2C_SDA, I2C_SCL);
 BNO055 imu(&i2c);
 
 // signals
-AnalogIn ballPhoto(BALL_PHOTOSENS);
+// AnalogIn ballPhoto(BALL_PHOTOSENS);
+Ball ballPhoto(BALL_PHOTOSENS, LED1, BALL_DETECT_VALUE, 200);
 DigitalOut raspBallDetectSig(RASPI_SIG);
-DigitalOut LED(LED1);
+// DigitalOut LED(LED1);
 
 LGKicker kicker[2] = {KICKER_STRAIGHT, KICKER_CHIP};
 Dribbler dribbler(DRIB_PWM);
@@ -56,9 +58,12 @@ uint8_t readBatteryVoltage() {
 void getSensors(RobotInfo &info) {
 
     rasp.syncFromRasp(info);
-    info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
-    info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
-    raspBallDetectSig = LED = info.isHoldBall;
+    // info.photoSensor = ballPhoto.read_u16() / 65.535; // 1000分率に変換
+    info.photoSensor = ballPhoto.getSensor();
+    // info.isHoldBall = (info.photoSensor < BALL_DETECT_VALUE);
+    info.isHoldBall = ballPhoto.getState();
+    // raspBallDetectSig = LED = info.isHoldBall;
+    raspBallDetectSig = info.isHoldBall;
     info.imuDirPrev = info.imuDir;
     info.imuDir = imu.getDeg();
     info.volt = readBatteryVoltage();
@@ -82,8 +87,6 @@ void actuatorTests() {
     if (swKicker.read() == false) {
         kicker[STRAIGHT_KICKER].Kick();
     }
-
-    
 }
 
 #endif
