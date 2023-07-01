@@ -2,6 +2,8 @@
 #define ATTITUDE_H
 #include "mbed.h"
 
+extern RawSerial pc;
+
 typedef struct {
     float rawData;  // コンパスのデータ
     float lastData; // 前回
@@ -20,11 +22,15 @@ typedef struct {
     float I;
     float D;
     int16_t turn;
+
+    bool imuReset;
 } type_pid;
 
 Ticker tickCalcIMU;
 Timer pidDt;
 type_pid pidDir;
+
+Timer timeFromLastImuReset;
 
 bool imuDirEnable = true;
 int16_t degBetween(int16_t deg1, int16_t deg2) {
@@ -59,6 +65,10 @@ void setPIDGain() {
 }
 
 void attitudeControl() {
+    if (pidDir.imuReset) {
+        timeFromLastImuReset.reset();
+    }
+
     if (imuDirEnable) {
         pidDir.currentData = degBetween_signed(pidDir.rawData, pidDir.target);
         pidDir.differential = (pidDir.lastData - pidDir.currentData) / 0.01;
@@ -74,9 +84,18 @@ void attitudeControl() {
             pidDir.totalError = 0;
         }
 
-        pidDir.P = pidDir.Kp * pidDir.currentData;
-        pidDir.I = pidDir.Ki * pidDir.totalError;
-        pidDir.D = pidDir.Kd * pidDir.differential;
+        if (timeFromLastImuReset.read_ms() < 500) {
+            pidDir.P = pidDir.Kp / 5 * pidDir.currentData;
+            pidDir.I = 0;
+            pidDir.D = 0;
+        } else {
+            pidDir.P = pidDir.Kp * pidDir.currentData;
+            pidDir.I = pidDir.Ki * pidDir.totalError;
+            pidDir.D = pidDir.Kd * pidDir.differential;
+        }
+        // pidDir.P = pidDir.Kp * pidDir.currentData;
+        // pidDir.I = pidDir.Ki * pidDir.totalError;
+        // pidDir.D = pidDir.Kd * pidDir.differential;
 
         pidDir.out = pidDir.P + pidDir.I + pidDir.D;
         if (abs(pidDir.out) > 35) {
@@ -85,6 +104,7 @@ void attitudeControl() {
         pidDir.targetPrev = pidDir.target;
         pidDir.turn = pidDir.out;
     }
+    // pc.printf("tim:%d\n", timeFromLastImuReset.read_ms());
 }
 
 int16_t getTurnAttitude() {

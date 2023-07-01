@@ -1,6 +1,12 @@
 #include "mbed.h"
 #include "modeRun.h"
 
+int imuResetDir = 0;
+int degAtReset = 0;
+int degDiffAtReset = 0;
+int degZeroAtReset = 0;
+const int easingDulation = 500;
+
 void setup() {
     swDrible.mode(PullUp);
     swKicker.mode(PullUp);
@@ -15,6 +21,7 @@ void setup() {
     pidDt.start();
     tickCalcIMU.attach_us(&attitudeControl, 10000);
     setPIDGain();
+    timeFromLastImuReset.start();
 }
 
 int main(void) {

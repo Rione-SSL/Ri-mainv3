@@ -7,6 +7,7 @@
 #include "RIMode.h"
 #include "RIHardwareAPI.h"
 #include "attitude.h"
+#include "Math.h"
 // mode management
 char mode;               // mode letter
 int8_t runningModeIndex; // mode index

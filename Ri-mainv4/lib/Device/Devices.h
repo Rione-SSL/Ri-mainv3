@@ -15,7 +15,7 @@
 
 class Devices {
   public:
-    Serial pc;
+    RawSerial pc;
     I2C i2c;
     raspSerial rasp;
     Ball ball;

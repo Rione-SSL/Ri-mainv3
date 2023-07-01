@@ -3,34 +3,56 @@
 
 #include "setup.h"
 
+extern int imuResetDir;
+extern Timer timeFromLastImuReset;
+extern int degAtReset;
+extern int degDiffAtReset;
+extern int degZeroAtReset;
+extern const int easingDulation;
+
 void before_main() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before main\r\n");
     imu.setZero();
+    timeFromLastImuReset.start();
 }
 // モードのメインプログラムを書く関数.この関数がループで実行されます
 
 void body_main() {
-
     int16_t m_turn = 0;
     bool isKick = false;
     bool isDrible = false;
     actuatorTests();
     getSensors(info);
 
+    // if (IMU_CALIBURATION) {
+    //     degAtReset = info.imuDir;                         // IMU Resetが送られてきた時の角度
+    //     degDiffAtReset = info.imuTargetDir;               // IMU Resetで送られてきた角度
+    //     degZeroAtReset = info.imuDir + info.imuTargetDir; // 0度方向になるべき角度
+    //     timeFromLastImuReset.reset();
+    // } else {
+    //     if (timeFromLastImuReset.read_ms() < easingDulation) {
+    //         int resetDeg = gapDegrees180(degAtReset, info.imuDir) + degDiffAtReset * (float)timeFromLastImuReset.read_ms() / (float)easingDulation;
+    //         imu.setDeg(resetDeg);
+    //     }
+    // }
     if (IMU_CALIBURATION) {
+        pidDir.imuReset = true;
         imu.setDeg(info.imuTargetDir);
+    } else {
+        pidDir.imuReset = false;
     }
+
     if (!info.emergency) {
         // MD.setMotors(info,0,0,0,0);//motorのpower
         pidDir.target = info.imuTargetDir;
         pidDir.rawData = info.imuDir;
         m_turn = getTurnAttitude();
-        if (IMU_CALIBURATION) {
-            MD.setVelocityZero();
-        } else {
-            MD.setVelocity(info, m_turn);
-        }
+        // if (IMU_CALIBURATION) {
+        //     MD.setVelocityZero();
+        // } else {
+        MD.setVelocity(info, m_turn);
+        // }
         // dribler.write(info.driblePower); // power:0.0~1.0
         if (info.isHoldBall) {
             dribbler.setPower(info.driblePower);
@@ -94,7 +116,6 @@ void body_main() {
         } else {
             dribbler.turnOff();
         }
-
     } else {
         pc.printf("emergency!!!\t");
         MD.setVelocityZero();
