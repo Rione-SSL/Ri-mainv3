@@ -11,9 +11,9 @@ LGKicker::LGKicker(PinName KickerPin)
 }
 
 bool LGKicker::Kick(void) {
-    if (timer.read_ms() > 2000) {
+    if (timer.read_ms() > 1000) {
         if (enabled == 0) {
-            KickerIsRedey.attach_us(callback(this, &LGKicker::flipOn), 2000);
+            KickerIsRedey.attach_us(callback(this, &LGKicker::flipOn), 100);
             enabled = 1;
         }
         return 1;
