@@ -6,6 +6,7 @@
 
 RobotInfo info = {0};
 int16_t emergencyCounter = 0;
+extern bool imuDirEnable;
 // パソコンからシリアル受信でモードコマンドを取得する関数
 void receiveCommand() {
     mode = pc.getc();
@@ -47,7 +48,7 @@ void checkBattery(RobotInfo &info) {
 }
 
 void initModeRun() {
-    mode = 'M'; //デフォルトはmodeMainで始めます
+    mode = 'M'; // デフォルトはmodeMainで始めます
     pc.attach(&receiveCommand, Serial::RxIrq);
 
     pc.printf("Boot!!\r\n");
@@ -75,7 +76,7 @@ void modeRun() {
         target = modes[runningModeIndex];
         targetPrev = modes[runningModeIndexPrev];
         if (runningModeIndexPrev == runningModeIndex) {
-            target.body(); //モードのメインプログラムの実行
+            target.body(); // モードのメインプログラムの実行
         } else {
             targetPrev.after();
             target.before();

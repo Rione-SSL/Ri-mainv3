@@ -2,14 +2,7 @@
 #define _MODEMAIN_
 
 #include "setup.h"
-
-extern int imuResetDir;
-extern Timer timeFromLastImuReset;
-extern int degAtReset;
-extern int degDiffAtReset;
-extern int degZeroAtReset;
-extern const int easingDulation;
-
+extern bool imuDirEnable;
 void before_main() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before main\r\n");
@@ -36,6 +29,11 @@ void body_main() {
     //         imu.setDeg(resetDeg);
     //     }
     // }
+    if (info.imuStatus == 9) {
+        imuDirEnable = false;
+    } else {
+        imuDirEnable = true;
+    }
     if (IMU_CALIBURATION) {
         pidDir.imuReset = true;
         imu.setDeg(info.imuTargetDir);

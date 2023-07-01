@@ -1,11 +1,6 @@
 #include "mbed.h"
 #include "modeRun.h"
 
-int imuResetDir = 0;
-int degAtReset = 0;
-int degDiffAtReset = 0;
-int degZeroAtReset = 0;
-const int easingDulation = 500;
 
 void setup() {
     swDrible.mode(PullUp);
