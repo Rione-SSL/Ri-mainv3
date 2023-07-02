@@ -3,6 +3,7 @@
 
 #include "setup.h"
 extern bool imuDirEnable;
+
 void before_main() {
     // bodyを実行する直前に1度だけ実行する関数
     pc.printf("before main\r\n");

@@ -33,7 +33,7 @@ BNO055 imu(&i2c);
 
 // signals
 // AnalogIn ballPhoto(BALL_PHOTOSENS);
-Ball ballPhoto(BALL_PHOTOSENS, LED1, BALL_DETECT_VALUE, 200);
+Ball ballPhoto(BALL_PHOTOSENS, LED1, BALL_DETECT_VALUE, 100);
 DigitalOut raspBallDetectSig(RASPI_SIG);
 // DigitalOut LED(LED1);
 
