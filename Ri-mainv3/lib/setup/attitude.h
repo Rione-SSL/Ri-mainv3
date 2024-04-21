@@ -103,6 +103,8 @@ void attitudeControl() {
         }
         pidDir.targetPrev = pidDir.target;
         pidDir.turn = pidDir.out;
+    }else{
+        pidDir.turn = 0;
     }
     // pc.printf("tim:%d\n", timeFromLastImuReset.read_ms());
 }
